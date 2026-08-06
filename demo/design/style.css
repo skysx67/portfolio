@@ -18,9 +18,9 @@
   --cream:#FBF9F6;
   --graphite:#1C1B19;
   --graphite-2:#2A2825;
-  --clay:#B0714F;
+  --clay:#B0714F;--clay-tx:#8C5333;
   --tx:#1C1B19;
-  --tx-mut:#7A736B;
+  --tx-mut:#5E574E;
   --tx-light:rgba(251,249,246,.72);
   --line:rgba(28,27,25,.16);
   --line-l:rgba(251,249,246,.2);
@@ -50,7 +50,7 @@ h1 em{font-style:normal;color:#E8B08A}
 
 .eyebrow{
   font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--clay);font-weight:500;margin-bottom:18px;
+  color:var(--clay-tx);font-weight:500;margin-bottom:18px;
 }
 .wrap{width:min(1280px,100% - 44px);margin-inline:auto}
 .wrap--mid{width:min(900px,100% - 44px);margin-inline:auto}
@@ -155,7 +155,7 @@ h1 em{font-style:normal;color:#E8B08A}
 .pj--wide img{aspect-ratio:21/9}
 .pj:hover img{transform:scale(1.035)}
 .pj figcaption{display:grid;gap:4px;padding:18px 2px 0}
-.pj__n{font-family:'Prata',Georgia,serif;font-size:15px;color:var(--clay);letter-spacing:.1em}
+.pj__n{font-family:'Prata',Georgia,serif;font-size:15px;color:var(--clay-tx);letter-spacing:.1em}
 .pj figcaption b{font-weight:500;font-size:18px;letter-spacing:-.01em}
 .pj figcaption em{font-style:normal;font-size:13.5px;color:var(--tx-mut);letter-spacing:.01em}
 
@@ -255,7 +255,7 @@ h1 em{font-style:normal;color:#E8B08A}
 .ftr__nav{display:flex;gap:20px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
 .ftr__nav a{text-decoration:none}
 .ftr__nav a:hover{color:var(--cream)}
-.ftr__note{font-size:12px;line-height:1.7;color:rgba(251,249,246,.42);text-align:right}
+.ftr__note{font-size:12px;line-height:1.7;color:rgba(251,249,246,.68);text-align:right}
 .ftr__note a{color:#D9A177;text-decoration:none}
 .ftr__note a:hover{text-decoration:underline}
 

@@ -172,7 +172,7 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 /* --- комнаты --- */
 .rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(243,239,228,.28);border:1px solid rgba(243,239,228,.28);border-radius:var(--r);overflow:hidden}
 .room{background:var(--teal);padding:20px 22px;display:grid;gap:3px}
-.room__n{font-size:13px;font-weight:500;color:rgba(243,239,228,.72);font-variant-numeric:tabular-nums}
+.room__n{font-size:13px;font-weight:500;color:rgba(243,239,228,.86);font-variant-numeric:tabular-nums}
 .room b{font-size:18px;font-weight:600}
 .room i{font-family:var(--head);font-style:normal;font-size:23px;font-weight:700;letter-spacing:-.035em;margin-top:5px;font-variant-numeric:tabular-nums}
 .room--all{background:var(--cream);color:var(--teal-d)}
