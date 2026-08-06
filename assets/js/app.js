@@ -1,7 +1,12 @@
-/* Портфолио — мобильное меню и форма-заглушка. */
+/* Портфолио — мобильное меню и сборка сообщения в Telegram.
+   Сервера нет, поэтому форма ничего не отправляет: она собирает текст
+   и открывает чат с уже готовым сообщением. Человек жмёт «отправить» сам. */
 (function () {
   'use strict';
 
+  var TG = 'skysx0207';
+
+  /* --- мобильное меню --- */
   var burger = document.querySelector('.burger');
   var mnav = document.getElementById('mnav');
   if (burger && mnav) {
@@ -19,9 +24,9 @@
     });
   }
 
+  /* --- форма → ссылка в Telegram --- */
   var form = document.getElementById('contactForm');
   if (!form) return;
-  var ok = form.querySelector('.form__ok');
 
   function setErr(name, msg) {
     var box = form.querySelector('[data-err="' + name + '"]');
@@ -34,14 +39,13 @@
     e.preventDefault();
     var valid = true;
 
-    if (!form.elements.name.value.trim()) { setErr('name', 'Как к вам обращаться?'); valid = false; }
+    var name = form.elements.name.value.trim();
+    if (!name) { setErr('name', 'Напишите, как к вам обращаться'); valid = false; }
     else setErr('name', '');
 
-    var c = form.elements.contact.value.trim();
-    // достаточно либо @ника, либо номера с 10+ цифрами
-    if (c.length < 4 || (c[0] !== '@' && c.replace(/\D/g, '').length < 10)) {
-      setErr('contact', 'Оставьте @ник в Telegram или номер телефона'); valid = false;
-    } else setErr('contact', '');
+    var biz = form.elements.biz.value.trim();
+    if (!biz) { setErr('biz', 'Пара слов о бизнесе — чтобы я сразу понял задачу'); valid = false; }
+    else setErr('biz', '');
 
     if (!valid) {
       var bad = form.querySelector('[aria-invalid="true"]');
@@ -49,15 +53,12 @@
       return;
     }
 
-    ok.querySelector('[data-ok-contact]').textContent = c;
-    ok.hidden = false;
-  });
+    var task = form.elements.task.value.trim();
+    var text = 'Здравствуйте! Меня зовут ' + name + '.\n' +
+               'Занимаюсь: ' + biz + '.' +
+               (task ? '\nЗадача: ' + task : '') +
+               '\n\n(написал с сайта)';
 
-  form.querySelector('[data-again]').addEventListener('click', function () {
-    form.reset();
-    ok.hidden = true;
-    form.querySelectorAll('.err.on').forEach(function (el) { el.classList.remove('on'); });
-    form.querySelectorAll('[aria-invalid]').forEach(function (el) { el.setAttribute('aria-invalid', 'false'); });
-    form.elements.name.focus();
+    window.open('https://t.me/' + TG + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
   });
 })();

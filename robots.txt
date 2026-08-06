@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Демо-лендинги закрыты через <meta name="robots" content="noindex">
+# в самих страницах — краулеру нужно их прочитать, поэтому здесь не запрещаем.
+
+Sitemap: https://skysx67.github.io/portfolio/sitemap.xml
