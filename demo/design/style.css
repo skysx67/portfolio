@@ -87,7 +87,7 @@ h1 em{font-style:normal;color:#E8B08A}
   padding:9px 20px;font-size:12.5px;letter-spacing:.01em;
 }
 .demobar b{color:var(--cream);font-weight:500}
-.demobar a{color:var(--clay);text-decoration:none;font-weight:500;white-space:nowrap}
+.demobar a{color:var(--clay);text-decoration:none;font-weight:500;white-space:nowrap;display:inline-block;padding:4px 0}
 .demobar a:hover{text-decoration:underline}
 
 /* ---------- Шапка ---------- */
@@ -162,6 +162,13 @@ h1 em{font-style:normal;color:#E8B08A}
 /* ---------- Услуги ---------- */
 .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
 .svc__i{background:var(--cream);padding:clamp(26px,2.6vw,38px) clamp(22px,2.2vw,32px);display:flex;flex-direction:column;gap:14px}
+/* Subgrid ставит цену, заголовок, описание, список и срок на одни линии во всех
+   трёх карточках — иначе разделители внутри карточек висят на разной высоте. */
+@supports (grid-template-rows:subgrid){
+  .svc{grid-template-rows:auto auto auto 1fr auto;row-gap:0}
+  .svc__i{display:grid;grid-row:1/-1;grid-template-rows:subgrid;row-gap:14px}
+  .svc__i > *{grid-column:1}
+}
 .svc__i--main{background:var(--sand)}
 .svc__p{font-family:'Prata',Georgia,serif;font-size:clamp(26px,2.6vw,34px);font-weight:400;color:var(--clay);line-height:1}
 .svc__i h3{font-family:'Prata',Georgia,serif;font-size:clamp(23px,2.2vw,29px);font-weight:500}
@@ -208,6 +215,11 @@ h1 em{font-style:normal;color:#E8B08A}
 /* ---------- Процесс ---------- */
 .flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .flow li{background:var(--cream);padding:clamp(24px,2.6vw,36px) clamp(18px,1.8vw,26px);display:grid;gap:10px;align-content:start}
+/* «Визуализация и материалы» в две строки — без subgrid абзац под ним съезжает */
+@supports (grid-template-rows:subgrid){
+  .flow{grid-template-rows:auto auto auto;row-gap:0}
+  .flow li{grid-row:1/-1;grid-template-rows:subgrid;row-gap:10px}
+}
 .flow__n{font-family:'Prata',Georgia,serif;font-size:34px;font-weight:400;color:var(--clay);line-height:1}
 .flow h3{font-family:'Prata',Georgia,serif;font-size:21px;font-weight:400}
 .flow p{font-size:15px;color:var(--tx-mut);line-height:1.55}
@@ -235,7 +247,7 @@ h1 em{font-style:normal;color:#E8B08A}
 .err.on{display:block}
 [aria-invalid="true"]{border-color:#B3261E!important}
 .cagree{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:var(--tx-mut);margin:10px 0 6px;cursor:pointer;line-height:1.4}
-.cagree input{margin-top:3px;width:16px;height:16px;accent-color:var(--graphite);flex:none}
+.cagree input{margin-top:2px;width:20px;height:20px;accent-color:var(--graphite);flex:none}
 .cform .btn{margin-top:18px}
 .cform__note{margin-top:12px;font-size:12px;color:var(--tx-mut)!important;text-align:center}
 .cform__ok{
@@ -252,11 +264,11 @@ h1 em{font-style:normal;color:#E8B08A}
 .ftr__in{display:grid;grid-template-columns:1fr auto 1fr;gap:34px;align-items:start}
 .ftr__logo{color:var(--cream);letter-spacing:.3em;font-size:17px;font-weight:500;margin-bottom:6px}
 .ftr__sub{font-size:13px}
-.ftr__nav{display:flex;gap:20px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
-.ftr__nav a{text-decoration:none}
+.ftr__nav{display:flex;gap:2px 20px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin:-6px 0}
+.ftr__nav a{text-decoration:none;padding:6px 0}
 .ftr__nav a:hover{color:var(--cream)}
 .ftr__note{font-size:12px;line-height:1.7;color:rgba(251,249,246,.68);text-align:right}
-.ftr__note a{color:#D9A177;text-decoration:none}
+.ftr__note a{color:#D9A177;text-decoration:none;display:inline-block;padding:5px 0}
 .ftr__note a:hover{text-decoration:underline}
 
 /* ---------- Адаптив ---------- */
@@ -287,4 +299,38 @@ h1 em{font-style:normal;color:#E8B08A}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+/* ==========================================================================
+   ДВИЖЕНИЕ — «Северова»
+   Самый «дорогой» из четырёх, поэтому и движение самое медленное: 1,1 с,
+   заголовки выходят из-под маски, проекты открываются шторкой с медленным
+   отъездом из зума. Ничего не пружинит и не повторяется.
+   ========================================================================== */
+:root{--e:cubic-bezier(.22,1,.36,1);--d:1.1s}
+::selection{background:var(--clay);color:var(--cream)}
+
+.rv-on [data-rv="up"]{
+  opacity:0;transform:translate3d(0,26px,0);
+  transition:opacity var(--d) var(--e),transform var(--d) var(--e);
+  transition-delay:calc(var(--rv-i,0) * 100ms);
+}
+.rv-on [data-rv="up"].rv-in{opacity:1;transform:none}
+
+.rv-on [data-rv="mask"]{
+  clip-path:inset(-.25em 0 105% 0);transform:translate3d(0,.12em,0);
+  transition:clip-path 1.15s var(--e),transform 1.15s var(--e);
+}
+.rv-on [data-rv="mask"].rv-in{clip-path:inset(-.25em 0 -.4em 0);transform:none}
+
+.rv-on [data-rv="img"]{clip-path:inset(0 0 100% 0)}
+.rv-on [data-rv="img"] img{transform:scale(1.07);transition:transform 1.8s var(--e)}
+.rv-on [data-rv="img"].rv-in{clip-path:inset(0 0 0 0);transition:clip-path 1.25s var(--e);transition-delay:calc(var(--rv-i,0) * 100ms)}
+.rv-on [data-rv="img"].rv-in img{transform:none}
+
+.btn{transition:background .45s var(--e),border-color .45s var(--e),color .45s var(--e)}
+.pj figcaption{transition:opacity .6s var(--e)}
+
+@media (prefers-reduced-motion:reduce){
+  .rv-on [data-rv]{opacity:1!important;transform:none!important;clip-path:none!important}
 }

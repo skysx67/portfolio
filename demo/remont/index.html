@@ -14,7 +14,17 @@
 <link rel="preload" as="font" type="font/woff2" href="fonts/oswald-700-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/oswald-600-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/pt-sans-400-cyrillic.woff2" crossorigin>
-<link rel="preload" as="image" href="img/hero.webp" imagesrcset="img/hero-800.webp 800w, img/hero.webp 1600w" imagesizes="(max-width:900px) 100vw, 45vw" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-800.webp" imagesrcset="img/hero-480.webp 480w, img/hero-800.webp 800w, img/hero-1120.webp 1120w, img/hero-1600.webp 1600w" imagesizes="(max-width:900px) calc(100vw - 40px), (max-width:1280px) 44vw, 543px" fetchpriority="high">
+<script>
+/* Стартовые состояния анимаций ставим до первой отрисовки. Если скрипт сайта
+   не доедет — через 1,2 с после загрузки показываем всё принудительно. */
+(function(d){var h=d.documentElement;
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ h.className+=' rv-on';
+ addEventListener('load',function(){setTimeout(function(){
+   if(!h.dataset.rvReady)h.classList.remove('rv-on');},1200);});
+})(document);
+</script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -73,8 +83,8 @@
         <li><b>0 ₽</b><span>замер и смета</span></li>
       </ul>
     </div>
-    <div class="hero__media">
-      <img src="img/hero.webp" srcset="img/hero-800.webp 800w, img/hero.webp 1600w" sizes="(max-width:900px) 100vw, 45vw" alt="Светлая гостиная после капитального ремонта" width="1600" height="1067" fetchpriority="high">
+    <div class="hero__media" data-rv="wipe">
+      <img src="img/hero-800.webp" srcset="img/hero-480.webp 480w, img/hero-800.webp 800w, img/hero-1120.webp 1120w, img/hero-1600.webp 1600w" sizes="(max-width:900px) calc(100vw - 40px), (max-width:1280px) 44vw, 543px" alt="Светлая гостиная после капитального ремонта" width="800" height="533" fetchpriority="high">
       <div class="hero__badge">
         <span class="mono">СМЕТА</span>
         <b>фиксируется<br>в договоре</b>
@@ -94,13 +104,13 @@
 <!-- 02 — КАЛЬКУЛЯТОР -->
 <section class="sec sec--grid" id="calc">
   <div class="wrap">
-    <div class="sec__head">
+    <div class="sec__head" data-rv="up">
       <span class="num mono">02</span>
       <h2>Калькулятор ремонта</h2>
       <p>Расчёт займёт полминуты. Это предварительная вилка — точную смету посчитает прораб после замера.</p>
     </div>
 
-    <div class="calc" id="calcApp">
+    <div class="calc" id="calcApp" data-rv="up">
       <div class="calc__form">
 
         <fieldset class="field">
@@ -193,13 +203,13 @@
 <!-- 03 — ЧТО ВХОДИТ -->
 <section class="sec sec--dark" id="included">
   <div class="wrap">
-    <div class="sec__head sec__head--light">
+    <div class="sec__head sec__head--light" data-rv="up">
       <span class="num mono">03</span>
       <h2>Что значит «под ключ»</h2>
       <p>Список работ из нашего договора. Всё, что в нём есть, входит в фиксированную цену.</p>
     </div>
-    <div class="incl">
-      <div class="incl__col">
+    <div class="incl" data-rv-stagger>
+      <div class="incl__col" data-rv="up">
         <h3 class="mono">ДО РАБОТ</h3>
         <ul class="ticklist">
           <li>Замер и фотофиксация квартиры</li>
@@ -208,7 +218,7 @@
           <li>Договор с фиксированной ценой</li>
         </ul>
       </div>
-      <div class="incl__col">
+      <div class="incl__col" data-rv="up">
         <h3 class="mono">В ХОДЕ РАБОТ</h3>
         <ul class="ticklist">
           <li>Свой прораб, а не «бригада на подряде»</li>
@@ -217,7 +227,7 @@
           <li>Закупка и доставка материалов</li>
         </ul>
       </div>
-      <div class="incl__col">
+      <div class="incl__col" data-rv="up">
         <h3 class="mono">ПОСЛЕ</h3>
         <ul class="ticklist">
           <li>Приёмка с чек-листом на 40 пунктов</li>
@@ -233,40 +243,40 @@
 <!-- 04 — ЭТАПЫ -->
 <section class="sec sec--grid" id="stages">
   <div class="wrap">
-    <div class="sec__head">
+    <div class="sec__head" data-rv="up">
       <span class="num mono">04</span>
       <h2>Как идёт ремонт</h2>
       <p>Средняя двушка 54 м² капитально — примерно 3 месяца. Вот из чего складывается срок.</p>
     </div>
-    <ol class="stages">
-      <li class="stage">
+    <ol class="stages" data-rv-stagger>
+      <li class="stage" data-rv="up">
         <span class="stage__n mono">01</span>
         <div>
           <h3>Замер и смета</h3>
           <p>Прораб приезжает с лазерной рулеткой, снимает размеры, смотрит стояки и электрощит. Смету присылаем за 2 дня.</p>
           <span class="stage__t mono">2–3 дня</span>
         </div>
-        <img src="img/process-1.webp" alt="Чертежи и план квартиры на столе" loading="lazy" width="900" height="600">
+        <img src="img/process-1-240.webp" srcset="img/process-1-240.webp 240w, img/process-1-480.webp 480w" sizes="(max-width:1080px) 170px, 210px" alt="Чертежи и план квартиры на столе" loading="lazy" width="240" height="160">
       </li>
-      <li class="stage">
+      <li class="stage" data-rv="up">
         <span class="stage__n mono">02</span>
         <div>
           <h3>Демонтаж и черновые</h3>
           <p>Сносим лишнее, штробим, разводим электрику и трубы, делаем стяжку и штукатурку. Самый грязный и самый важный этап.</p>
           <span class="stage__t mono">4–6 недель</span>
         </div>
-        <img src="img/process-2.webp" alt="Электрик монтирует проводку в квартире" loading="lazy" width="900" height="600">
+        <img src="img/process-2-240.webp" srcset="img/process-2-240.webp 240w, img/process-2-480.webp 480w" sizes="(max-width:1080px) 170px, 210px" alt="Электрик монтирует проводку в квартире" loading="lazy" width="240" height="160">
       </li>
-      <li class="stage">
+      <li class="stage" data-rv="up">
         <span class="stage__n mono">03</span>
         <div>
           <h3>Чистовая отделка</h3>
           <p>Плитка, полы, покраска, потолки, двери. Здесь уже видно результат, и здесь чаще всего меняют решения — мы это закладываем в план.</p>
           <span class="stage__t mono">4–5 недель</span>
         </div>
-        <img src="img/process-3.webp" alt="Строительная площадка и материалы" loading="lazy" width="900" height="600">
+        <img src="img/process-3-240.webp" srcset="img/process-3-240.webp 240w, img/process-3-480.webp 480w" sizes="(max-width:1080px) 170px, 210px" alt="Строительная площадка и материалы" loading="lazy" width="240" height="160">
       </li>
-      <li class="stage">
+      <li class="stage" data-rv="up">
         <span class="stage__n mono">04</span>
         <div>
           <h3>Приёмка</h3>
@@ -281,18 +291,18 @@
 <!-- 05 — РАБОТЫ -->
 <section class="sec" id="works">
   <div class="wrap">
-    <div class="sec__head">
+    <div class="sec__head" data-rv="up">
       <span class="num mono">05</span>
       <h2>Сделанные квартиры</h2>
       <p>Шесть объектов из последних тридцати. Фото — после приёмки, до заезда мебели.</p>
     </div>
-    <div class="works">
-      <figure class="work"><img src="img/work-1.webp" alt="Кухня после капитального ремонта" loading="lazy" width="1000" height="667"><figcaption><b>Кухня-гостиная, 28 м²</b><span class="mono">ЖК «Восточный» · капитальный · 11 недель</span></figcaption></figure>
-      <figure class="work"><img src="img/work-2.webp" alt="Санузел после ремонта" loading="lazy" width="1000" height="667"><figcaption><b>Санузел, 4,2 м²</b><span class="mono">ул. Мельникайте · под ключ · 3 недели</span></figcaption></figure>
-      <figure class="work"><img src="img/work-3.webp" alt="Спальня после ремонта" loading="lazy" width="1000" height="667"><figcaption><b>Спальня, 16 м²</b><span class="mono">ЖК «Сосновый» · косметический · 2 недели</span></figcaption></figure>
-      <figure class="work"><img src="img/work-4.webp" alt="Гостиная с паркетной ёлочкой" loading="lazy" width="1000" height="667"><figcaption><b>Гостиная, 22 м²</b><span class="mono">ул. Республики · дизайнерский · 9 недель</span></figcaption></figure>
-      <figure class="work"><img src="img/work-5.webp" alt="Кухня-столовая после ремонта" loading="lazy" width="1000" height="667"><figcaption><b>Двухкомнатная, 54 м²</b><span class="mono">ЖК «Преображенский» · капитальный · 13 недель</span></figcaption></figure>
-      <figure class="work"><img src="img/work-6.webp" alt="Ванная комната после ремонта" loading="lazy" width="1000" height="667"><figcaption><b>Ванная, 5,8 м²</b><span class="mono">ул. 30 лет Победы · под ключ · 4 недели</span></figcaption></figure>
+    <div class="works" data-rv-stagger>
+      <figure class="work" data-rv="wipe"><img src="img/work-1-420.webp" srcset="img/work-1-420.webp 420w, img/work-1-840.webp 840w, img/work-1-1240.webp 1240w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 50vw, (max-width:1280px) 33vw, 411px" alt="Кухня после капитального ремонта" loading="lazy" width="420" height="280"><figcaption><b>Кухня-гостиная, 28 м²</b><span class="mono">ЖК «Восточный» · капитальный · 11 недель</span></figcaption></figure>
+      <figure class="work" data-rv="wipe"><img src="img/work-2-420.webp" srcset="img/work-2-420.webp 420w, img/work-2-840.webp 840w, img/work-2-1240.webp 1240w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 50vw, (max-width:1280px) 33vw, 411px" alt="Санузел после ремонта" loading="lazy" width="420" height="280"><figcaption><b>Санузел, 4,2 м²</b><span class="mono">ул. Мельникайте · под ключ · 3 недели</span></figcaption></figure>
+      <figure class="work" data-rv="wipe"><img src="img/work-3-420.webp" srcset="img/work-3-420.webp 420w, img/work-3-840.webp 840w, img/work-3-1240.webp 1240w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 50vw, (max-width:1280px) 33vw, 411px" alt="Спальня после ремонта" loading="lazy" width="420" height="280"><figcaption><b>Спальня, 16 м²</b><span class="mono">ЖК «Сосновый» · косметический · 2 недели</span></figcaption></figure>
+      <figure class="work" data-rv="wipe"><img src="img/work-4-420.webp" srcset="img/work-4-420.webp 420w, img/work-4-840.webp 840w, img/work-4-1240.webp 1240w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 50vw, (max-width:1280px) 33vw, 411px" alt="Гостиная с паркетной ёлочкой" loading="lazy" width="420" height="280"><figcaption><b>Гостиная, 22 м²</b><span class="mono">ул. Республики · дизайнерский · 9 недель</span></figcaption></figure>
+      <figure class="work" data-rv="wipe"><img src="img/work-5-420.webp" srcset="img/work-5-420.webp 420w, img/work-5-840.webp 840w, img/work-5-1240.webp 1240w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 50vw, (max-width:1280px) 33vw, 411px" alt="Кухня-столовая после ремонта" loading="lazy" width="420" height="280"><figcaption><b>Двухкомнатная, 54 м²</b><span class="mono">ЖК «Преображенский» · капитальный · 13 недель</span></figcaption></figure>
+      <figure class="work" data-rv="wipe"><img src="img/work-6-420.webp" srcset="img/work-6-420.webp 420w, img/work-6-840.webp 840w, img/work-6-1240.webp 1240w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 50vw, (max-width:1280px) 33vw, 411px" alt="Ванная комната после ремонта" loading="lazy" width="420" height="280"><figcaption><b>Ванная, 5,8 м²</b><span class="mono">ул. 30 лет Победы · под ключ · 4 недели</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -300,20 +310,20 @@
 <!-- 06 — ОТЗЫВЫ -->
 <section class="sec sec--paper">
   <div class="wrap">
-    <div class="sec__head">
+    <div class="sec__head" data-rv="up">
       <span class="num mono">06</span>
       <h2>Что говорят заказчики</h2>
     </div>
-    <div class="revs">
-      <blockquote class="rev">
+    <div class="revs" data-rv-stagger>
+      <blockquote class="rev" data-rv="up">
         <p>Больше всего боялась, что смета вырастет вдвое, как у знакомых. Выросла на 14 тысяч — докупали плитку, потому что я сама поменяла раскладку. Всё остальное по договору.</p>
         <footer><b>Ольга К.</b><span class="mono">двушка 58 м², ЖК «Преображенский»</span></footer>
       </blockquote>
-      <blockquote class="rev">
+      <blockquote class="rev" data-rv="up">
         <p>Живу в другом городе, квартиру принимал по видео. Каждую пятницу приходил отчёт с фото. Один раз переделывали откосы, спорить не пришлось.</p>
         <footer><b>Дмитрий Ш.</b><span class="mono">студия 31 м², ул. Широтная</span></footer>
       </blockquote>
-      <blockquote class="rev">
+      <blockquote class="rev" data-rv="up">
         <p>Срок сдвинулся на две недели из-за поставки плитки. Предупредили заранее, не в последний день. Для ремонта это, по-моему, нормально.</p>
         <footer><b>Марина и Артём</b><span class="mono">трёшка 76 м², ЖК «Восточный»</span></footer>
       </blockquote>
@@ -324,32 +334,32 @@
 <!-- 07 — FAQ -->
 <section class="sec sec--grid" id="faq">
   <div class="wrap wrap--narrow">
-    <div class="sec__head">
+    <div class="sec__head" data-rv="up">
       <span class="num mono">07</span>
       <h2>Частые вопросы</h2>
     </div>
-    <div class="faq">
-      <details class="qa">
+    <div class="faq" data-rv-stagger>
+      <details class="qa" data-rv="up">
         <summary>Почему цена в калькуляторе — вилка, а не точная цифра?</summary>
         <p>Пока мы не видели квартиру, мы не знаем состояние стяжки, стен и электрощита. В старом фонде разброс работ больше, в новостройке меньше. После замера прораб считает по позициям, и вот эта цифра уже фиксируется в договоре.</p>
       </details>
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Что если смета всё-таки вырастет?</summary>
         <p>Смета растёт только в двух случаях: вы меняете решение (другая плитка, добавили розетки) или вскрылось то, что нельзя было увидеть при замере — например, гнилая труба в стене. Всё, что мы не учли по своей невнимательности, доделываем за свой счёт. Это записано в договоре отдельным пунктом.</p>
       </details>
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Можно с материалами от меня?</summary>
         <p>Да, это вариант «только работа» в калькуляторе. Мы даём список с точными объёмами и артикулами, вы закупаете сами. Единственное — за брак и недостачу материала в этом случае отвечаете вы.</p>
       </details>
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Как платить?</summary>
         <p>Понедельно по факту выполненных работ. Предоплата — только на материалы, если закупаем мы, и только под чеки. Всю сумму вперёд не берём.</p>
       </details>
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Работаете со вторичкой и хрущёвками?</summary>
         <p>Да, примерно половина объектов — вторичка. Там дороже демонтаж и почти всегда нужна полная замена электрики, это видно в калькуляторе.</p>
       </details>
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Есть ли гарантия и что она покрывает?</summary>
         <p>3 года на все работы: отслоилась плитка, треснула штукатурка, потекло соединение — приезжаем и переделываем бесплатно. На материалы действует гарантия производителя.</p>
       </details>

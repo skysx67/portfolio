@@ -20,7 +20,20 @@
 
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/oranienbaum-400-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/spectral-400-cyrillic.woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/case-perfecto.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/case-perfecto-1200.webp" fetchpriority="high"
+      imagesrcset="assets/img/case-perfecto-600.webp 600w, assets/img/case-perfecto-900.webp 900w, assets/img/case-perfecto-1200.webp 1200w, assets/img/case-perfecto-1600.webp 1600w"
+      imagesizes="(max-width:660px) calc(100vw - 44px), (max-width:1100px) 88vw, (max-width:1324px) 45vw, 575px">
+<script>
+/* Включаем стартовые состояния анимаций до первой отрисовки — иначе страница
+   моргнёт готовым видом. Если app.js почему-то не доедет, через 1,2 с после
+   загрузки всё показываем принудительно. */
+(function(d){var h=d.documentElement;
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ h.className+=' rv-on';
+ addEventListener('load',function(){setTimeout(function(){
+   if(!h.dataset.rvReady)h.classList.remove('rv-on');},1200);});
+})(document);
+</script>
 <link rel="stylesheet" href="assets/css/style.css">
 
 <script type="application/ld+json">
@@ -79,9 +92,9 @@
 <section class="hero">
   <div class="wrap hero__in">
     <div class="hero__head">
-      <h1>Сайты,<br>на которые<br>приходят<br><span class="hero__em">заявки</span></h1>
+      <h1 data-rv="mask">Сайты,<br>на которые<br>приходят<br><span class="hero__em">заявки</span></h1>
     </div>
-    <aside class="hero__meta">
+    <aside class="hero__meta" data-rv="up" style="--rv-i:1">
       <dl>
         <div><dt>Где</dt><dd>Тюмень и удалённо</dd></div>
         <div><dt>Сколько</dt><dd>от 3 600 ₽</dd></div>
@@ -91,8 +104,8 @@
     </aside>
   </div>
   <div class="wrap hero__foot">
-    <p class="hero__lead">Небольшому бизнесу редко нужен «корпоративный портал». Нужна одна страница, где понятно, что вы делаете, сколько это стоит и как с вами связаться. Такие страницы я и собираю — руками, без конструкторов и готовых тем.</p>
-    <p class="hero__cta">
+    <p class="hero__lead" data-rv="up">Небольшому бизнесу редко нужен «корпоративный портал». Нужна одна страница, где понятно, что вы делаете, сколько это стоит и как с вами связаться. Такие страницы я и собираю — руками, без конструкторов и готовых тем.</p>
+    <p class="hero__cta" data-rv="up" style="--rv-i:1">
       <a class="btn" href="#cases">Смотреть работы</a>
       <a class="ulink" href="https://t.me/skysx0207" target="_blank" rel="noopener">Написать в Telegram</a>
     </p>
@@ -103,15 +116,15 @@
 <section class="sec" id="cases">
   <div class="wrap">
     <header class="shead">
-      <h2>Четыре сайта</h2>
-      <p>Первый — действующий сайт мебельного производства. Остальные три — демо: компании я придумал, но собрал их как настоящие. У каждого своя вёрстка, своя логика и свой характер, а не одна тема, перекрашенная четыре раза.</p>
+      <h2 data-rv="mask">Четыре сайта</h2>
+      <p data-rv="up" style="--rv-i:1">Первый — действующий сайт мебельного производства. Остальные три — демо: компании я придумал, но собрал их как настоящие. У каждого своя вёрстка, своя логика и свой характер, а не одна тема, перекрашенная четыре раза.</p>
     </header>
 
     <ol class="cases">
 
-      <li class="case">
-        <span class="case__num" aria-hidden="true">01</span>
-        <div class="case__body">
+      <li class="case" data-rv="row" data-rv-stagger>
+        <span class="case__num" data-rv="fig" aria-hidden="true">01</span>
+        <div class="case__body" data-rv="up">
           <p class="case__niche">Мебель на заказ · действующий сайт</p>
           <h3>Перфекто</h3>
           <p class="case__desc">Производство кухонь, шкафов и гардеробных в Тюмени. Первый проект, где всё по-настоящему: живые фото цеха, живые заявки и владелец, которому важно, чтобы звонили.</p>
@@ -124,17 +137,20 @@
           </ul>
           <p class="case__go"><a class="btn btn--sm" href="https://skysx67.github.io/perfecto-mebel/" target="_blank" rel="noopener">Открыть сайт</a></p>
         </div>
-        <figure class="case__shot">
+        <figure class="case__shot" data-rv="img">
           <a href="https://skysx67.github.io/perfecto-mebel/" target="_blank" rel="noopener">
-            <img src="assets/img/case-perfecto.webp" alt="Первый экран сайта мебельной компании Перфекто: тёмный фон, заголовок «Мебель на заказ точно под ваши размеры»" width="1200" height="800" fetchpriority="high">
+            <img src="assets/img/case-perfecto-1200.webp"
+                 srcset="assets/img/case-perfecto-600.webp 600w, assets/img/case-perfecto-900.webp 900w, assets/img/case-perfecto-1200.webp 1200w, assets/img/case-perfecto-1600.webp 1600w"
+                 sizes="(max-width:660px) calc(100vw - 44px), (max-width:1100px) 88vw, (max-width:1324px) 45vw, 575px"
+                 alt="Первый экран сайта мебельной компании Перфекто: тёмный фон, заголовок «Мебель на заказ точно под ваши размеры»" width="1200" height="800" fetchpriority="high">
           </a>
           <figcaption>skysx67.github.io/perfecto-mebel</figcaption>
         </figure>
       </li>
 
-      <li class="case case--flip">
-        <span class="case__num" aria-hidden="true">02</span>
-        <div class="case__body">
+      <li class="case case--flip" data-rv="row" data-rv-stagger>
+        <span class="case__num" data-rv="fig" aria-hidden="true">02</span>
+        <div class="case__body" data-rv="up">
           <p class="case__niche">Ремонт квартир под ключ · демо</p>
           <h3>Ровно</h3>
           <p class="case__desc">Ниша, где человек боится одного: что смета вырастет вдвое. Весь сайт построен вокруг этого страха — и вокруг калькулятора, который сразу показывает вилку и срок.</p>
@@ -146,15 +162,18 @@
           </ul>
           <p class="case__go"><a class="btn btn--sm" href="demo/remont/">Смотреть демо</a></p>
         </div>
-        <figure class="case__shot">
-          <a href="demo/remont/"><img src="assets/img/case-remont.webp" alt="Первый экран демо-лендинга ремонта квартир «Ровно» с калькулятором сметы" width="1200" height="800" loading="lazy"></a>
+        <figure class="case__shot" data-rv="img">
+          <a href="demo/remont/"><img src="assets/img/case-remont-1200.webp"
+                 srcset="assets/img/case-remont-600.webp 600w, assets/img/case-remont-900.webp 900w, assets/img/case-remont-1200.webp 1200w, assets/img/case-remont-1600.webp 1600w"
+                 sizes="(max-width:660px) calc(100vw - 44px), (max-width:1100px) 88vw, (max-width:1324px) 45vw, 575px"
+                 alt="Первый экран демо-лендинга ремонта квартир «Ровно» с калькулятором сметы" width="1200" height="800" loading="lazy"></a>
           <figcaption>demo/remont</figcaption>
         </figure>
       </li>
 
-      <li class="case">
-        <span class="case__num" aria-hidden="true">03</span>
-        <div class="case__body">
+      <li class="case" data-rv="row" data-rv-stagger>
+        <span class="case__num" data-rv="fig" aria-hidden="true">03</span>
+        <div class="case__body" data-rv="up">
           <p class="case__niche">Натяжные потолки · демо</p>
           <h3>Потолок&#8202;72</h3>
           <p class="case__desc">Здесь решение принимают быстро и по цене. Поэтому сайт короткий: форма замера видна сразу, прайс идёт следом за преимуществами, а дальше готовые цены под типовые комнаты.</p>
@@ -166,15 +185,18 @@
           </ul>
           <p class="case__go"><a class="btn btn--sm" href="demo/potolki/">Смотреть демо</a></p>
         </div>
-        <figure class="case__shot">
-          <a href="demo/potolki/"><img src="assets/img/case-potolki.webp" alt="Первый экран демо-лендинга натяжных потолков «Потолок72» с формой замера" width="1200" height="800" loading="lazy"></a>
+        <figure class="case__shot" data-rv="img">
+          <a href="demo/potolki/"><img src="assets/img/case-potolki-1200.webp"
+                 srcset="assets/img/case-potolki-600.webp 600w, assets/img/case-potolki-900.webp 900w, assets/img/case-potolki-1200.webp 1200w, assets/img/case-potolki-1600.webp 1600w"
+                 sizes="(max-width:660px) calc(100vw - 44px), (max-width:1100px) 88vw, (max-width:1324px) 45vw, 575px"
+                 alt="Первый экран демо-лендинга натяжных потолков «Потолок72» с формой замера" width="1200" height="800" loading="lazy"></a>
           <figcaption>demo/potolki</figcaption>
         </figure>
       </li>
 
-      <li class="case case--flip">
-        <span class="case__num" aria-hidden="true">04</span>
-        <div class="case__body">
+      <li class="case case--flip" data-rv="row" data-rv-stagger>
+        <span class="case__num" data-rv="fig" aria-hidden="true">04</span>
+        <div class="case__body" data-rv="up">
           <p class="case__niche">Дизайн интерьера · демо</p>
           <h3>Северова</h3>
           <p class="case__desc">Дизайнера выбирают глазами, поэтому здесь главное — портфолио и воздух. Вместо калькулятора цены — тест на стиль: мягкий способ втянуть человека в диалог, пока он ещё не готов говорить про бюджет.</p>
@@ -186,8 +208,11 @@
           </ul>
           <p class="case__go"><a class="btn btn--sm" href="demo/design/">Смотреть демо</a></p>
         </div>
-        <figure class="case__shot">
-          <a href="demo/design/"><img src="assets/img/case-design.webp" alt="Первый экран демо-лендинга студии дизайна интерьера «Северова»" width="1200" height="800" loading="lazy"></a>
+        <figure class="case__shot" data-rv="img">
+          <a href="demo/design/"><img src="assets/img/case-design-1200.webp"
+                 srcset="assets/img/case-design-600.webp 600w, assets/img/case-design-900.webp 900w, assets/img/case-design-1200.webp 1200w, assets/img/case-design-1600.webp 1600w"
+                 sizes="(max-width:660px) calc(100vw - 44px), (max-width:1100px) 88vw, (max-width:1324px) 45vw, 575px"
+                 alt="Первый экран демо-лендинга студии дизайна интерьера «Северова»" width="1200" height="800" loading="lazy"></a>
           <figcaption>demo/design</figcaption>
         </figure>
       </li>
@@ -200,13 +225,13 @@
 <section class="sec sec--dark" id="services">
   <div class="wrap">
     <header class="shead shead--light">
-      <h2>Сколько это стоит</h2>
-      <p>Цена за работу целиком, без «а вёрстка отдельно». Тарифы отличаются не количеством блоков, а тем, что сайт умеет.</p>
+      <h2 data-rv="mask">Сколько это стоит</h2>
+      <p data-rv="up" style="--rv-i:1">Цена за работу целиком, без «а вёрстка отдельно». Тарифы отличаются не количеством блоков, а тем, что сайт умеет.</p>
     </header>
 
-    <div class="price">
+    <div class="price" data-rv-stagger>
 
-      <article class="tier">
+      <article class="tier" data-rv="up">
         <div class="tier__head">
           <h3>Сайт-визитка</h3>
           <p class="tier__sum"><s>6 000 ₽</s> <b>3 600 ₽</b></p>
@@ -220,7 +245,7 @@
         </ul>
       </article>
 
-      <article class="tier tier--main">
+      <article class="tier tier--main" data-rv="up">
         <div class="tier__head">
           <h3>Лендинг под нишу <span class="tier__tag">чаще всего берут</span></h3>
           <p class="tier__sum"><s>12 000 ₽</s> <b>7 200 ₽</b></p>
@@ -235,7 +260,7 @@
         </ul>
       </article>
 
-      <article class="tier">
+      <article class="tier" data-rv="up">
         <div class="tier__head">
           <h3>Лендинг с расчётом</h3>
           <p class="tier__sum"><s>20 000 ₽</s> <b>12 000 ₽</b></p>
@@ -252,9 +277,9 @@
     </div>
 
     <!-- Убрать этот блок, когда наберётся три клиента -->
-    <p class="offer">Зачёркнутая цена — обычная. Первым трём клиентам в Тюмени делаю за 40% дешевле: мне нужны живые проекты в портфолио, вам — сайт за половину денег. Условие одно: разрешите показывать работу другим.</p>
+    <p class="offer" data-rv="up">Зачёркнутая цена — обычная. Первым трём клиентам в Тюмени делаю за 40% дешевле: мне нужны живые проекты в портфолио, вам — сайт за половину денег. Условие одно: разрешите показывать работу другим.</p>
 
-    <div class="incl">
+    <div class="incl" data-rv="up">
       <h3>Входит в любую цену</h3>
       <ul>
         <li>Адаптив: телефон, планшет, десктоп</li>
@@ -272,11 +297,14 @@
 <!-- ОБО МНЕ -->
 <section class="sec" id="about">
   <div class="wrap about">
-    <figure class="about__img">
-      <img src="assets/img/me.webp" alt="Рабочее место: экран с кодом" width="1000" height="667" loading="lazy">
+    <figure class="about__img" data-rv="img">
+      <img src="assets/img/me-560.webp"
+           srcset="assets/img/me-320.webp 320w, assets/img/me-560.webp 560w, assets/img/me-1000.webp 1000w"
+           sizes="(max-width:900px) calc(100vw - 44px), (max-width:1324px) 36vw, 468px"
+           alt="Рабочее место: экран с кодом" width="560" height="700" loading="lazy">
     </figure>
-    <div class="about__text">
-      <h2>Кто это делает</h2>
+    <div class="about__text" data-rv="up" style="--rv-i:1">
+      <h2 data-rv="mask">Кто это делает</h2>
       <p>Живу в Тюмени, делаю сайты для небольшого бизнеса. Не агентство и не фрилансер с потоком — беру немного проектов и веду каждый сам от первого разговора до запуска.</p>
       <p>Начал с сайта мебельного производства. Там впервые всё было по-настоящему: живые фото цеха, реальные заявки и владелец, который спрашивает, почему сегодня никто не позвонил. После него сделал себе Telegram-приложение для тренировок — дневник зала, куда записываю подходы и смотрю статистику.</p>
       <p>Три сайта в портфолио — демо. Компании я придумал, но собрал их как настоящие: своя вёрстка под каждую нишу, работающий калькулятор, работающий квиз, честный адаптив. Это полезнее, чем показывать чужие работы или темы с маркетплейса.</p>
@@ -293,26 +321,26 @@
 <section class="sec sec--tint">
   <div class="wrap">
     <header class="shead">
-      <h2>Как это выглядит</h2>
-      <p>Первый шаг бесплатный и ни к чему не обязывает. Деньги появляются только там, где вы уже увидели свою страницу.</p>
+      <h2 data-rv="mask">Как это выглядит</h2>
+      <p data-rv="up" style="--rv-i:1">Первый шаг бесплатный и ни к чему не обязывает. Деньги появляются только там, где вы уже увидели свою страницу.</p>
     </header>
-    <ol class="flow">
-      <li>
+    <ol class="flow" data-rv-stagger>
+      <li data-rv="up">
         <h3>Разговор или ТЗ</h3>
         <p>До часа голосом или в переписке — как удобнее. Что за бизнес, кто клиенты, что уже пробовали, чего ждёте от сайта. Можно вообще без созвона: пришлите текстом, дальше разберусь сам.</p>
         <p class="flow__t">бесплатно</p>
       </li>
-      <li>
+      <li data-rv="up">
         <h3>Прототип по ссылке</h3>
         <p>Собираю страницу без дизайна: все блоки, все тексты, всё кликается. Открываете с телефона и говорите, что переставить. На этом этапе менять можно сколько угодно.</p>
         <p class="flow__t">бесплатно · 2–3 дня</p>
       </li>
-      <li>
+      <li data-rv="up">
         <h3>Дизайн и вёрстка</h3>
         <p>Прототип устраивает — беру половину суммы и делаю настоящий сайт. Присылаю ссылку, вы смотрите с телефона и присылаете правки списком.</p>
         <p class="flow__t">предоплата 50%</p>
       </li>
-      <li>
+      <li data-rv="up">
         <h3>Запуск</h3>
         <p>Подключаю домен, проверяю формы, отдаю исходники. Две недели после запуска правки бесплатные, дальше считаем по объёму работы.</p>
         <p class="flow__t">остаток после запуска</p>
@@ -324,15 +352,15 @@
 <!-- FAQ -->
 <section class="sec">
   <div class="wrap wrap--narrow">
-    <header class="shead"><h2>Что обычно спрашивают</h2></header>
-    <div class="faq">
+    <header class="shead"><h2 data-rv="mask">Что обычно спрашивают</h2></header>
+    <div class="faq" data-rv-stagger>
 
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>У меня нет ни текстов, ни фото. Это проблема?</summary>
         <div><p>Тексты пишу сам: задам вопросы, соберу черновик, вы поправите формулировки. С фото сложнее — свои снимки работ всегда убеждают лучше стоковых. Если их нет, на первое время подберу стоковые, потом заменим на ваши, это дело пяти минут.</p></div>
       </details>
 
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Почему не Тильда? Там же проще.</summary>
         <div>
           <p>На Тильде вы платите подписку, пока сайт нужен: 6 000 ₽ в год на тарифе Personal, 12 000 ₽ на Business. У меня визитка лежит на бесплатном хостинге и не стоит ни рубля в месяц, сайт с формой живёт на моём сервере за мой счёт, а платите вы только за домен — 199 ₽ в год. Плюс файлы ваши: можно унести куда угодно, и грузятся они заметно быстрее конструктора.</p>
@@ -340,27 +368,27 @@
         </div>
       </details>
 
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Куда будут приходить заявки?</summary>
         <div><p>По умолчанию в Telegram: приходит сообщение с именем, телефоном и тем, что человек выбрал в калькуляторе. Можно дублировать на почту. Могу подключить и MAX, но там дольше — бота придётся регистрировать вам. Настраиваю всё я, от вас нужен только чат.</p></div>
       </details>
 
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Как платим и что будет, если я передумаю?</summary>
         <div><p>Разговор, структура и прототип — бесплатно, тут вы ничем не рискуете. Согласовали прототип — 50% вперёд, эти деньги не возвращаются, но всё сделанное я отдаю файлами, они ваши. Остаток после запуска. Считать «сколько успели сделать» и спорить об этом не придётся.</p></div>
       </details>
 
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Вы начинающий. Почему я должен вам довериться?</summary>
         <div><p>Честный ответ: потому что я беру заметно меньше рынка и вкладываюсь заметно больше — мне нужны эти первые проекты. Работы, по которым можно судить, выше на этой странице: они открываются, калькулятор считает, квиз работает. Начать можно с малого — сделаю визитку за 3 600 ₽, посмотрите результат, дальше решите.</p></div>
       </details>
 
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Делаете интернет-магазины и личные кабинеты?</summary>
         <div><p>Пока нет. Беру то, что умею делать хорошо: одностраничники с формами, калькуляторами и квизами. Нужен магазин с оплатой и складом — честнее сказать сразу, чем учиться за ваши деньги.</p></div>
       </details>
 
-      <details class="qa">
+      <details class="qa" data-rv="up">
         <summary>Что с персональными данными и 152-ФЗ?</summary>
         <div><p>Если на сайте есть форма, оператором данных становитесь вы. Я готовлю политику обработки на ваши реквизиты, ставлю галочку согласия в форму и держу заявки на российском сервере — этого требует закон о локализации. Отдельным пунктом в договоре фиксируем, что я обрабатываю данные по вашему поручению. Юрист вам для этого не нужен, но показать договор своему юристу один раз — правильно.</p></div>
       </details>
@@ -372,8 +400,8 @@
 <!-- КОНТАКТЫ -->
 <section class="sec sec--dark" id="contact">
   <div class="wrap contact">
-    <div class="contact__text">
-      <h2>Напишите — обсудим</h2>
+    <div class="contact__text" data-rv="up">
+      <h2 data-rv="mask">Напишите — обсудим</h2>
       <p>Расскажите в двух словах, что за бизнес и что хотите от сайта. Отвечу, сколько это будет стоить и сколько займёт, без «нужно созвониться, чтобы понять».</p>
       <ul class="contact__links">
         <li><a href="https://t.me/skysx0207" target="_blank" rel="noopener"><span>Telegram</span><b>@skysx0207</b></a></li>
@@ -382,7 +410,7 @@
       <p class="contact__note">Обычно отвечаю в течение пары часов, вечером — быстрее.</p>
     </div>
 
-    <form class="form" id="contactForm" novalidate>
+    <form class="form" id="contactForm" data-rv="up" style="--rv-i:1" novalidate>
       <p class="form__lead">Не хотите писать сами — заполните, и я соберу сообщение за вас. Кнопка откроет Telegram с готовым текстом, останется нажать «отправить».</p>
       <div class="fld">
         <label for="f-name">Как вас зовут</label>
@@ -407,7 +435,7 @@
 </main>
 
 <footer class="ftr">
-  <div class="wrap ftr__in">
+  <div class="wrap ftr__in" data-rv="up">
     <p class="ftr__brand">Максим Вагин<span>Сайты для бизнеса · Тюмень</span></p>
     <nav class="ftr__nav" aria-label="Подвал">
       <a href="#cases">Работы</a><a href="#services">Цены</a><a href="#about">Обо мне</a><a href="#contact">Контакты</a>

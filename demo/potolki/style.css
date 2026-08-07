@@ -69,7 +69,7 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 /* --- плашка «демо» --- */
 .demobar{background:var(--ink);color:rgba(243,239,228,.76);text-align:center;padding:9px 20px;font-size:13px;line-height:1.45}
 .demobar b{color:var(--cream)}
-.demobar a{color:#7FD3C5;font-weight:500;text-decoration:none;white-space:nowrap}
+.demobar a{color:#7FD3C5;font-weight:500;text-decoration:none;white-space:nowrap;display:inline-block;padding:4px 0}
 .demobar a:hover{text-decoration:underline}
 
 /* --- шапка --- */
@@ -108,7 +108,7 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 .hero__price b{font-family:var(--head);font-weight:700;font-size:clamp(21px,2.1vw,27px);letter-spacing:-.035em;color:var(--teal);font-variant-numeric:tabular-nums}
 .hero__price span{font-size:13px;color:var(--tx-mut);line-height:1.3;max-width:15em}
 .hero__img{max-width:1220px;margin:0 auto;padding:0 20px}
-.hero__img img{width:100%;aspect-ratio:24/9;object-fit:cover;object-position:58% 24%;border-radius:var(--r) var(--r) 0 0;border:1px solid var(--line);border-bottom:0}
+.hero__img img{width:100%;aspect-ratio:24/9;object-fit:cover;object-position:50% 28%;border-radius:var(--r) var(--r) 0 0;border:1px solid var(--line);border-bottom:0}
 
 /* --- форма-карточка --- */
 .qform{position:relative;background:var(--white);border:1px solid var(--line);border-top:5px solid var(--teal);border-radius:var(--r);padding:26px 24px 24px}
@@ -196,7 +196,7 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 .how__img{margin:0}
 .how__img img{border-radius:var(--r);width:100%;border:1px solid var(--line)}
 .how__img figcaption{margin-top:9px;font-size:11.5px;color:var(--tx-mut)}
-.how__img figcaption a{color:var(--tx-mut)}
+.how__img figcaption a{color:var(--tx-mut);display:inline-block;padding:5px 0}
 
 /* --- отзывы и вопросы --- */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,58px);align-items:start}
@@ -229,11 +229,11 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 .ftr__brand span{display:block;font-family:var(--head);font-weight:700;color:var(--cream);font-size:18px;letter-spacing:-.03em;margin-bottom:5px}
 .ftr__brand b{color:#7FD3C5}
 .ftr__brand p{font-size:13.5px}
-.ftr__nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px}
-.ftr__nav a{text-decoration:none}
+.ftr__nav{display:flex;gap:2px 18px;flex-wrap:wrap;font-size:13.5px;margin:-6px 0}
+.ftr__nav a{text-decoration:none;padding:6px 0}
 .ftr__nav a:hover{color:var(--cream)}
 .ftr__note{font-size:12px;line-height:1.65;color:rgba(243,239,228,.55);text-align:right}
-.ftr__note a{color:#7FD3C5;text-decoration:none}
+.ftr__note a{color:#7FD3C5;text-decoration:none;display:inline-block;padding:5px 0}
 .ftr__note a:hover{text-decoration:underline}
 
 /* --- липкая кнопка --- */
@@ -276,4 +276,33 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+/* ==========================================================================
+   ДВИЖЕНИЕ — «Потолок72»
+   Тёплый и спокойный сайт: подъём на 20 px за 0,75 с, картинки открываются
+   шторкой снизу вверх и садятся из лёгкого зума. Плитки и галерея выходят
+   лесенкой — по 70 мс между соседями.
+   ========================================================================== */
+:root{--e:cubic-bezier(.22,1,.36,1);--d:.75s}
+::selection{background:var(--teal);color:var(--cream)}
+
+.rv-on [data-rv="up"]{
+  opacity:0;transform:translate3d(0,20px,0);
+  transition:opacity var(--d) var(--e),transform var(--d) var(--e);
+  transition-delay:calc(var(--rv-i,0) * 70ms);
+}
+.rv-on [data-rv="up"].rv-in{opacity:1;transform:none}
+
+.rv-on [data-rv="img"]{clip-path:inset(0 0 100% 0)}
+.rv-on [data-rv="img"] img{transform:scale(1.05);transition:transform 1.3s var(--e)}
+.rv-on [data-rv="img"].rv-in{clip-path:inset(0 0 0 0);transition:clip-path .95s var(--e);transition-delay:calc(var(--rv-i,0) * 70ms)}
+.rv-on [data-rv="img"].rv-in img{transform:none}
+
+.btn{transition:background .3s var(--e),border-color .3s var(--e),color .3s var(--e)}
+.qa[open] div{animation:qa-in .45s var(--e) both}
+@keyframes qa-in{from{opacity:0;transform:translate3d(0,-6px,0)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .rv-on [data-rv]{opacity:1!important;transform:none!important;clip-path:none!important}
 }

@@ -75,7 +75,7 @@ h3{font-size:clamp(18px,1.7vw,23px);font-weight:600}
   font-size:13px;line-height:1.4;text-align:center;
 }
 .demobar b{color:#fff}
-.demobar a{color:var(--orange);text-decoration:none;font-weight:700;white-space:nowrap}
+.demobar a{color:var(--orange);text-decoration:none;font-weight:700;white-space:nowrap;display:inline-block;padding:4px 0}
 .demobar a:hover{text-decoration:underline}
 .demobar__dot{width:8px;height:8px;background:var(--orange);flex:none}
 
@@ -269,7 +269,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:26px;border-radius:0;backg
 .form .err.on{display:block}
 .form [aria-invalid="true"]{border-color:#B3261E;background:#FFF5F4}
 .agree{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--tx-mut);margin:4px 0 8px;cursor:pointer;line-height:1.4}
-.agree input{margin-top:2px;width:17px;height:17px;accent-color:var(--orange);flex:none}
+.agree input{margin-top:1px;width:20px;height:20px;accent-color:var(--orange);flex:none}
 .form__note{margin-top:10px;font-size:12px;color:var(--tx-mut);text-align:center}
 .form__ok{position:absolute;inset:0;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:32px}
 .form__ok[hidden]{display:none}
@@ -283,11 +283,11 @@ input[type=range]::-moz-range-thumb{width:16px;height:26px;border-radius:0;backg
 .ftr__in{display:grid;grid-template-columns:1fr auto 1fr;gap:30px;align-items:start}
 .ftr .logo__txt{color:#fff;display:block;margin-bottom:5px}
 .ftr .mono{font-size:11px;letter-spacing:.1em}
-.ftr__cols{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--head);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
-.ftr__cols a{text-decoration:none;border-bottom:2px solid transparent}
+.ftr__cols{display:flex;gap:2px 20px;flex-wrap:wrap;font-family:var(--head);font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin:-6px 0}
+.ftr__cols a{text-decoration:none;border-bottom:2px solid transparent;padding:6px 0}
 .ftr__cols a:hover{color:#fff;border-color:var(--orange)}
 .ftr__note{font-size:12px;line-height:1.6;color:rgba(233,231,226,.55);text-align:right}
-.ftr__note a{color:var(--orange);text-decoration:none}
+.ftr__note a{color:var(--orange);text-decoration:none;display:inline-block;padding:5px 0}
 .ftr__note a:hover{text-decoration:underline}
 
 /* --- липкая кнопка --- */
@@ -336,4 +336,34 @@ input[type=range]::-moz-range-thumb{width:16px;height:26px;border-radius:0;backg
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+/* ==========================================================================
+   ДВИЖЕНИЕ — «Ровно»
+   Характер сайта прорабский, поэтому и движение такое: короткое, решительное,
+   без плавных красивостей. Смещения 18 px, 0,55 с, картинки открываются
+   резким горизонтальным сгоном слева направо — как будто протянули правилом.
+   ========================================================================== */
+:root{--e:cubic-bezier(.2,.9,.25,1);--d:.55s}
+::selection{background:var(--orange);color:var(--ink)}
+
+.rv-on [data-rv="up"]{
+  opacity:0;transform:translate3d(0,18px,0);
+  transition:opacity var(--d) var(--e),transform var(--d) var(--e);
+  transition-delay:calc(var(--rv-i,0) * 65ms);
+}
+.rv-on [data-rv="up"].rv-in{opacity:1;transform:none}
+
+.rv-on [data-rv="wipe"]{clip-path:inset(0 100% 0 0)}
+.rv-on [data-rv="wipe"].rv-in{clip-path:inset(0 0 0 0);transition:clip-path .7s var(--e);transition-delay:calc(var(--rv-i,0) * 65ms)}
+
+/* оранжевая метка номера этапа подъезжает вместе со строкой */
+.stage__n{transition:color .4s var(--e)}
+.btn{transition:background .28s var(--e),border-color .28s var(--e),color .28s var(--e)}
+.work img{transition:transform .7s var(--e),filter .5s var(--e)}
+.work:hover img{transform:scale(1.03);filter:contrast(1.04)}
+.work{overflow:hidden}
+
+@media (prefers-reduced-motion:reduce){
+  .rv-on [data-rv]{opacity:1!important;transform:none!important;clip-path:none!important}
 }

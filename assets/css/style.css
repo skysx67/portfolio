@@ -33,6 +33,8 @@
   --rule:rgba(22,21,15,.2);
   --rule-l:rgba(244,241,234,.24);
   --pad:clamp(64px,8vw,140px);
+  /* Общая левая колонка под номера: кейсы и шаги процесса стоят на одной линии */
+  --rail:clamp(46px,4.8vw,84px);
   --serif:'Spectral',Georgia,'Times New Roman',serif;
   --display:'Oranienbaum','Spectral',Georgia,serif;
   --mono:'JetBrains Mono',ui-monospace,'Cascadia Mono',monospace;
@@ -73,9 +75,11 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .sec--dark .btn{background:var(--paper);color:var(--ink);border-color:var(--paper)}
 .sec--dark .btn:hover{background:var(--wine);border-color:var(--wine);color:#fff}
 .ulink{
-  font:400 15.5px/1.3 var(--serif);text-decoration:none;
+  font:400 15.5px/1.3 var(--serif);text-decoration:none;position:relative;
   border-bottom:1px solid var(--wine);color:var(--wine);padding-bottom:2px;
 }
+/* подчёркивание оставляем тонким, а область нажатия растим до 24px по WCAG 2.5.8 */
+.ulink::after{content:"";position:absolute;inset:-8px -4px}
 .ulink:hover{background:rgba(142,29,44,.08)}
 :focus-visible{outline:2px solid var(--wine);outline-offset:3px}
 .sec--dark :focus-visible{outline-color:#E8A9B1}
@@ -126,17 +130,23 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 
 /* --- кейсы --- */
 .cases{list-style:none;margin:0;padding:0}
+/* Раскладка задана явно через grid-area. order здесь использовать нельзя:
+   при автоплейсменте он переставляет элементы по колонкам, а не отражает строку. */
 .case{
-  display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.25fr);
-  gap:clamp(18px,3vw,52px);align-items:start;
-  padding:clamp(34px,4vw,58px) 0;border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:var(--rail) minmax(0,1fr) minmax(0,1.12fr);
+  column-gap:clamp(20px,3vw,54px);row-gap:clamp(18px,2vw,28px);align-items:start;
+  padding:clamp(38px,4.4vw,64px) 0;border-top:1px solid var(--rule);
 }
 .case:last-child{border-bottom:1px solid var(--rule)}
 .case__num{
-  font-family:var(--display);font-size:clamp(34px,4.4vw,64px);line-height:.8;
-  color:var(--tx-faint);
+  grid-area:1/1;font-family:var(--display);font-size:clamp(30px,3.4vw,50px);
+  line-height:1;color:var(--tx-faint);
 }
-.case--flip .case__shot{order:-1}
+.case__body{grid-area:1/2}
+.case__shot{grid-area:1/3}
+.case--flip{grid-template-columns:var(--rail) minmax(0,1.12fr) minmax(0,1fr)}
+.case--flip .case__shot{grid-area:1/2}
+.case--flip .case__body{grid-area:1/3}
 .case__niche{font:400 11px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--wine);margin-bottom:14px}
 .case__body h3{font-family:var(--display);font-weight:400;font-size:clamp(30px,3.6vw,46px);line-height:1;margin-bottom:16px}
 .case__desc{color:var(--tx-mut);font-size:17px;max-width:32em}
@@ -144,7 +154,7 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .case__list li{position:relative;padding-left:20px;font-size:16px;line-height:1.45}
 .case__list li::before{content:"";position:absolute;left:0;top:.72em;width:10px;height:1px;background:var(--wine)}
 .case__go{margin-top:26px}
-.case__shot{margin:0}
+.case__shot{margin:0;min-width:0}
 .case__shot a{display:block;text-decoration:none}
 .case__shot img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:50% 0;border:1px solid var(--rule);filter:saturate(.96);transition:filter .3s,transform .3s}
 .case__shot a:hover img{filter:saturate(1.06);transform:translateY(-3px)}
@@ -182,12 +192,23 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .about__list b{font-weight:600;color:var(--ink)}
 
 /* --- процесс --- */
+/* Раскладка тоже явная: без grid-area подпись справа уезжала на вторую строку
+   в колонку номера и растягивала её — из-за этого шаги стояли лесенкой. */
 .flow{list-style:none;counter-reset:f;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--rule)}
-.flow li{counter-increment:f;display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,.4fr);gap:clamp(16px,3vw,44px);padding:clamp(22px,2.6vw,34px) 0;border-bottom:1px solid var(--rule);align-items:baseline}
-.flow li::before{content:counter(f,decimal-leading-zero);font-family:var(--display);font-size:clamp(24px,2.6vw,34px);color:var(--tx-faint);line-height:1}
-.flow h3{margin-bottom:9px}
-.flow p{color:var(--tx-mut);font-size:16.5px;max-width:44em}
-.flow__t{font:400 11px/1 var(--mono)!important;letter-spacing:.11em;text-transform:uppercase;color:var(--wine)!important;text-align:right}
+.flow li{
+  counter-increment:f;display:grid;
+  grid-template-columns:var(--rail) minmax(0,1fr) minmax(0,14em);
+  column-gap:clamp(20px,3vw,54px);row-gap:9px;align-items:baseline;
+  padding:clamp(24px,2.8vw,38px) 0;border-bottom:1px solid var(--rule);
+}
+.flow li::before{
+  content:counter(f,decimal-leading-zero);grid-area:1/1;
+  font-family:var(--display);font-size:clamp(22px,2.2vw,30px);
+  color:var(--tx-faint);line-height:1.2;
+}
+.flow h3{grid-area:1/2}
+.flow li > p:not(.flow__t){grid-area:2/2;color:var(--tx-mut);font-size:16.5px;max-width:44em}
+.flow li > .flow__t{grid-area:1/3;font:400 11px/1.65 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--wine);text-align:right}
 
 /* --- FAQ --- */
 .faq{border-top:1px solid var(--rule)}
@@ -238,21 +259,22 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .ftr__in{display:grid;grid-template-columns:1fr auto 1fr;gap:34px;align-items:start}
 .ftr__brand{font-family:var(--display);font-size:20px;color:var(--paper);display:flex;flex-direction:column;gap:5px}
 .ftr__brand span{font:400 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.62)}
-.ftr__nav{display:flex;gap:22px;flex-wrap:wrap;font:400 11px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase}
-.ftr__nav a{text-decoration:none}
+.ftr__nav{display:flex;gap:4px 22px;flex-wrap:wrap;font:400 11px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;margin:-7px 0}
+.ftr__nav a{text-decoration:none;padding:7px 0}
 .ftr__nav a:hover{color:var(--paper)}
 .ftr__note{font-size:13px;line-height:1.65;color:rgba(244,241,234,.6);text-align:right}
 
 /* --- адаптив --- */
 @media (max-width:1100px){
-  .case,.case--flip{grid-template-columns:auto minmax(0,1fr)}
-  .case__shot,.case--flip .case__shot{order:0;grid-column:1/-1;margin-top:6px}
+  .case,.case--flip{grid-template-columns:var(--rail) minmax(0,1fr)}
+  .case__body,.case--flip .case__body{grid-area:1/2}
+  .case__shot,.case--flip .case__shot{grid-area:2/2}
   .tier{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .tier__list{grid-column:1/-1}
   .incl ul{grid-template-columns:repeat(2,1fr)}
   .contact{grid-template-columns:1fr}
-  .flow li{grid-template-columns:auto minmax(0,1fr)}
-  .flow__t{grid-column:2;text-align:left}
+  .flow li{grid-template-columns:var(--rail) minmax(0,1fr)}
+  .flow li > .flow__t{grid-area:3/2;text-align:left}
 }
 @media (max-width:900px){
   .nav,.hdr__tg{display:none}
@@ -267,15 +289,118 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 }
 @media (max-width:660px){
   body{font-size:16.5px}
-  .case,.case--flip{grid-template-columns:1fr;gap:0}
-  .case__num{margin-bottom:10px}
+  .case,.case--flip{grid-template-columns:minmax(0,1fr);row-gap:18px}
+  .case__num,.case--flip .case__num{grid-area:1/1}
+  .case__body,.case--flip .case__body{grid-area:2/1}
+  .case__shot,.case--flip .case__shot{grid-area:3/1}
   .tier{grid-template-columns:1fr;gap:16px}
   .incl ul{grid-template-columns:1fr}
-  .flow li{grid-template-columns:1fr;gap:8px}
+  .flow li{grid-template-columns:minmax(0,1fr);row-gap:8px}
+  .flow li::before{grid-area:1/1}
+  .flow h3{grid-area:2/1}
+  .flow li > p:not(.flow__t){grid-area:3/1}
+  .flow li > .flow__t{grid-area:4/1;text-align:left}
   .qa summary{font-size:17.5px}
+}
+
+/* ==========================================================================
+   ДВИЖЕНИЕ
+
+   Правила, по которым это собрано, — те же, что делают дорогой полиграфию:
+   ничего не прыгает, ничего не пружинит, всё приходит медленно и один раз.
+   Смещения маленькие (18–24 px), длительности длинные (0,9–1,4 с), кривая
+   одна на весь сайт. Картинки не «выезжают», а открываются шторкой; линейки
+   прочерчиваются слева направо; крупные цифры садятся из разрядки.
+   Повторного проигрывания при возврате наверх нет — это выдаёт аттракцион.
+   ========================================================================== */
+:root{
+  --e:cubic-bezier(.22,1,.36,1);   /* быстрый вход, долгое успокоение */
+  --d:.95s;
+}
+
+::selection{background:var(--wine);color:#fff}
+
+/* Первый экран проявляется вдвое быстрее остальных: именно он попадает в LCP,
+   и лишние полсекунды анимации там стоят полсекунды в замерах скорости. */
+.hero [data-rv]{--d:.55s}
+.hero [data-rv="up"]{transition-delay:calc(var(--rv-i,0) * 55ms)}
+.hero [data-rv="mask"]{transition-duration:.6s}
+
+/* Базовое проявление: подъём на 24 px с растворением */
+.rv-on [data-rv="up"]{
+  opacity:0;transform:translate3d(0,24px,0);
+  transition:opacity var(--d) var(--e),transform var(--d) var(--e);
+  transition-delay:calc(var(--rv-i,0) * 90ms);
+}
+.rv-on [data-rv="up"].rv-in{opacity:1;transform:none}
+
+/* Заголовок выходит из-под маски */
+.rv-on [data-rv="mask"]{
+  clip-path:inset(-.25em 0 105% 0);transform:translate3d(0,.12em,0);
+  transition:clip-path 1.05s var(--e),transform 1.05s var(--e);
+  transition-delay:calc(var(--rv-i,0) * 90ms);
+}
+.rv-on [data-rv="mask"].rv-in{clip-path:inset(-.25em 0 -.4em 0);transform:none}
+
+/* Крупная цифра: разрядка «садится» на место */
+.rv-on [data-rv="fig"]{
+  opacity:0;letter-spacing:.16em;
+  transition:opacity 1s var(--e),letter-spacing 1.3s var(--e);
+}
+.rv-on [data-rv="fig"].rv-in{opacity:1;letter-spacing:0}
+
+/* Снимок работы: шторка снизу вверх плюс медленный отъезд из зума */
+.rv-on [data-rv="img"]{clip-path:inset(0 0 100% 0)}
+.rv-on [data-rv="img"] > a,.rv-on [data-rv="img"] > img{transform:scale(1.06);transition:transform 1.6s var(--e)}
+.rv-on [data-rv="img"].rv-in{clip-path:inset(0 0 0 0);transition:clip-path 1.15s var(--e)}
+.rv-on [data-rv="img"].rv-in > a,.rv-on [data-rv="img"].rv-in > img{transform:none}
+
+/* Волосяные линейки между кейсами прочерчиваются слева направо */
+.case{border-color:transparent!important;position:relative}
+.case::before,.case:last-child::after{
+  content:"";position:absolute;left:0;right:0;height:1px;background:var(--rule);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform 1.2s var(--e);
+}
+.case::before{top:0}
+.case:last-child::after{bottom:0;transition-delay:.18s}
+.case.rv-in::before,.case.rv-in::after{transform:none}
+html:not(.rv-on) .case::before,html:not(.rv-on) .case:last-child::after{transform:none}
+
+/* Кнопка заливается слева, а не перекрашивается рывком */
+.btn{position:relative;isolation:isolate;overflow:hidden;transition:color .4s var(--e),border-color .4s var(--e)}
+.btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;background:var(--wine);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .55s var(--e);
+}
+.btn:hover{background:var(--ink);border-color:var(--wine);color:#fff}
+.btn:hover::before{transform:none}
+.sec--dark .btn:hover{background:var(--paper);border-color:var(--wine)}
+
+/* Снимок работы на наведении — медленно и почти незаметно */
+.case__shot img{transition:filter .6s var(--e),transform .8s var(--e)}
+.case__shot a:hover img{filter:saturate(1.07) contrast(1.02);transform:translateY(-4px)}
+.contact__links a{transition:padding-left .45s var(--e)}
+.ulink,.nav a,.qa summary{transition:color .35s var(--e),background-color .35s var(--e),border-color .35s var(--e)}
+
+/* Ответ в FAQ раскрывается, а не выскакивает */
+.qa[open] div{animation:qa-in .5s var(--e) both}
+@keyframes qa-in{from{opacity:0;transform:translate3d(0,-6px,0)}to{opacity:1;transform:none}}
+
+/* Волосок прогресса под шапкой: чистый CSS, привязан к прокрутке страницы */
+@supports (animation-timeline:scroll()){
+  .hdr{overflow:hidden}
+  .hdr::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--wine);
+    transform:scaleX(0);transform-origin:0 50%;
+    animation:hdr-progress linear both;animation-timeline:scroll(root block);
+  }
+  @keyframes hdr-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 }
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rv-on [data-rv]{opacity:1!important;transform:none!important;clip-path:none!important}
+  .rv-on [data-rv="fig"]{letter-spacing:0!important}
+  .case::before,.case:last-child::after{transform:none!important}
 }

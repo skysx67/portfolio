@@ -14,7 +14,17 @@
 <link rel="preload" as="font" type="font/woff2" href="fonts/unbounded-800-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/unbounded-700-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/onest-400-cyrillic.woff2" crossorigin>
-<link rel="preload" as="image" href="img/hero.webp" imagesrcset="img/hero-800.webp 800w, img/hero.webp 1600w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-1400.webp" imagesrcset="img/hero-640.webp 640w, img/hero-820.webp 820w, img/hero-1000.webp 1000w, img/hero-1400.webp 1400w, img/hero-1900.webp 1900w, img/hero-2440.webp 2440w" imagesizes="(max-width:1220px) calc(100vw - 40px), 1180px" fetchpriority="high">
+<script>
+/* Стартовые состояния анимаций ставим до первой отрисовки. Если скрипт сайта
+   не доедет — через 1,2 с после загрузки показываем всё принудительно. */
+(function(d){var h=d.documentElement;
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ h.className+=' rv-on';
+ addEventListener('load',function(){setTimeout(function(){
+   if(!h.dataset.rvReady)h.classList.remove('rv-on');},1200);});
+})(document);
+</script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -92,7 +102,7 @@
       </div>
     </form>
   </div>
-  <div class="hero__img"><img src="img/hero.webp" srcset="img/hero-800.webp 800w, img/hero.webp 1600w" sizes="100vw" alt="Светлый белый потолок в просторной комнате" width="1600" height="1067" fetchpriority="high"></div>
+  <div class="hero__img" data-rv="img"><img src="img/hero-1400.webp" srcset="img/hero-640.webp 640w, img/hero-820.webp 820w, img/hero-1000.webp 1000w, img/hero-1400.webp 1400w, img/hero-1900.webp 1900w, img/hero-2440.webp 2440w" sizes="(max-width:1220px) calc(100vw - 40px), 1180px" alt="Просторная светлая гостиная с ровным белым натяжным потолком и встроенными светильниками" width="1400" height="788" fetchpriority="high"></div>
 </section>
 
 <!-- ПРЕИМУЩЕСТВА -->
@@ -125,11 +135,11 @@
 <section class="sec" id="price">
   <div class="wrap">
     <header class="head">
-      <h2>Цены на потолки</h2>
+      <h2 data-rv="up">Цены на потолки</h2>
       <p>Цена под ключ: полотно, профиль, крепёж, работа и вынос мусора. Обход трубы и установка светильника уже включены.</p>
     </header>
 
-    <div class="price">
+    <div class="price" data-rv-stagger>
       <article class="pcard">
         <h3>Матовый</h3>
         <p class="pcard__d">Ровный белый потолок без бликов. Самый частый выбор — выглядит как идеально покрашенный.</p>
@@ -179,10 +189,10 @@
 <section class="sec sec--blue" id="rooms">
   <div class="wrap">
     <header class="head head--light">
-      <h2>Сколько стоит ваша комната</h2>
+      <h2 data-rv="up">Сколько стоит ваша комната</h2>
       <p>Готовые расчёты под ключ: сатиновое полотно, профиль, монтаж и один светильник. Реальная цена после замера отличается обычно на пару сотен рублей.</p>
     </header>
-    <div class="rooms">
+    <div class="rooms" data-rv-stagger>
       <div class="room"><span class="room__n">4 м²</span><b>Санузел</b><i>от 3 200 ₽</i></div>
       <div class="room"><span class="room__n">9 м²</span><b>Кухня</b><i>от 5 400 ₽</i></div>
       <div class="room"><span class="room__n">12 м²</span><b>Спальня</b><i>от 6 900 ₽</i></div>
@@ -198,16 +208,16 @@
 <section class="sec" id="gallery">
   <div class="wrap">
     <header class="head">
-      <h2>Наши работы</h2>
+      <h2 data-rv="up">Наши работы</h2>
       <p>Квартиры и дома в Тюмени за последний год.</p>
     </header>
-    <div class="gal">
-      <figure class="gal__i gal__i--big"><img src="img/g1.webp" alt="Кухня-гостиная с точечными светильниками в потолке" loading="lazy" width="1000" height="667"><figcaption>Кухня-гостиная 26 м² · сатин + 8 точек</figcaption></figure>
-      <figure class="gal__i"><img src="img/g2.webp" alt="Белая кухня с натяжным потолком" loading="lazy" width="1000" height="667"><figcaption>Кухня 11 м² · мат + подсветка</figcaption></figure>
-      <figure class="gal__i"><img src="img/g3.webp" alt="Светлая комната с ровным белым потолком" loading="lazy" width="1000" height="667"><figcaption>Спальня 14 м² · мат</figcaption></figure>
-      <figure class="gal__i"><img src="img/g4.webp" alt="Минималистичная комната с натяжным потолком" loading="lazy" width="1000" height="667"><figcaption>Кабинет 9 м² · сатин</figcaption></figure>
-      <figure class="gal__i"><img src="img/g5.webp" alt="Гостиная со светлым потолком" loading="lazy" width="1000" height="667"><figcaption>Гостиная 20 м² · сатин, два уровня</figcaption></figure>
-      <figure class="gal__i"><img src="img/g6.webp" alt="Просторная гостиная с высоким потолком" loading="lazy" width="1000" height="667"><figcaption>Дом, холл 32 м² · тканевый без шва</figcaption></figure>
+    <div class="gal" data-rv-stagger>
+      <figure class="gal__i gal__i--big" data-rv="img"><img src="img/g1-820.webp" srcset="img/g1-420.webp 420w, img/g1-820.webp 820w, img/g1-1240.webp 1240w, img/g1-1660.webp 1660w" sizes="(max-width:900px) calc(100vw - 40px), (max-width:1260px) 66vw, 808px" alt="Кухня-гостиная с точечными светильниками в потолке" loading="lazy" width="820" height="547"><figcaption>Кухня-гостиная 26 м² · сатин + 8 точек</figcaption></figure>
+      <figure class="gal__i" data-rv="img"><img src="img/g2-420.webp" srcset="img/g2-220.webp 220w, img/g2-420.webp 420w, img/g2-820.webp 820w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 48vw, (max-width:1260px) 32vw, 396px" alt="Белая кухня с натяжным потолком" loading="lazy" width="420" height="280"><figcaption>Кухня 11 м² · мат + подсветка</figcaption></figure>
+      <figure class="gal__i" data-rv="img"><img src="img/g3-420.webp" srcset="img/g3-220.webp 220w, img/g3-420.webp 420w, img/g3-820.webp 820w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 48vw, (max-width:1260px) 32vw, 396px" alt="Светлая комната с ровным белым потолком" loading="lazy" width="420" height="280"><figcaption>Спальня 14 м² · мат</figcaption></figure>
+      <figure class="gal__i" data-rv="img"><img src="img/g4-420.webp" srcset="img/g4-220.webp 220w, img/g4-420.webp 420w, img/g4-820.webp 820w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 48vw, (max-width:1260px) 32vw, 396px" alt="Минималистичная комната с натяжным потолком" loading="lazy" width="420" height="280"><figcaption>Кабинет 9 м² · сатин</figcaption></figure>
+      <figure class="gal__i" data-rv="img"><img src="img/g5-420.webp" srcset="img/g5-220.webp 220w, img/g5-420.webp 420w, img/g5-820.webp 820w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 48vw, (max-width:1260px) 32vw, 396px" alt="Гостиная со светлым потолком" loading="lazy" width="420" height="280"><figcaption>Гостиная 20 м² · сатин, два уровня</figcaption></figure>
+      <figure class="gal__i" data-rv="img"><img src="img/g6-420.webp" srcset="img/g6-220.webp 220w, img/g6-420.webp 420w, img/g6-820.webp 820w" sizes="(max-width:660px) calc(100vw - 40px), (max-width:900px) 48vw, (max-width:1260px) 32vw, 396px" alt="Лестничный холл в частном доме с белым натяжным потолком" loading="lazy" width="420" height="280"><figcaption>Дом, холл 32 м² · тканевый без шва</figcaption></figure>
     </div>
   </div>
 </section>
@@ -217,7 +227,7 @@
   <div class="wrap how">
     <div class="how__text">
       <header class="head">
-        <h2>Как проходит монтаж</h2>
+        <h2 data-rv="up">Как проходит монтаж</h2>
         <p>Обычная комната — 3–4 часа от звонка в дверь до уборки.</p>
       </header>
       <ol class="steps">
@@ -227,9 +237,9 @@
         <li><b>Уборка</b><span>Пылесосим, выносим мусор, подписываем гарантийный талон. Мебель можно не выносить — только отодвинуть от стен.</span></li>
       </ol>
     </div>
-    <figure class="how__img">
-      <img src="img/montage.webp" alt="Монтажники натягивают полотно потолка" loading="lazy" width="1200" height="908">
-      <figcaption>Фото: Laqfoil Ltd., <a href="https://commons.wikimedia.org/wiki/File:Stretch_Ceiling_Installation.webp" rel="nofollow noopener" target="_blank">Wikimedia Commons</a>, CC BY-SA 4.0</figcaption>
+    <figure class="how__img" data-rv="img">
+      <img src="img/montage-600.webp" srcset="img/montage-600.webp 600w, img/montage-1180.webp 1180w, img/montage-1600.webp 1600w" sizes="(max-width:900px) calc(100vw - 40px), (max-width:1260px) 47vw, 581px" alt="Монтажники натягивают полотно потолка" loading="lazy" width="600" height="467">
+      <figcaption>Фото: Laqfoil Ltd., <a href="https://commons.wikimedia.org/wiki/File:Stretch_Ceiling_Installation.jpg" rel="nofollow noopener" target="_blank">Wikimedia Commons</a>, CC BY-SA 4.0</figcaption>
     </figure>
   </div>
 </section>
@@ -238,7 +248,7 @@
 <section class="sec">
   <div class="wrap two">
     <div>
-      <header class="head"><h2>Отзывы</h2></header>
+      <header class="head" data-rv="up"><h2>Отзывы</h2></header>
       <div class="revs">
         <blockquote class="rev"><p>Померили в четверг, в субботу поставили. Два потолка, шесть точек — 14 200 ₽, как и сказали на замере.</p><footer>Наталья, ЖК «Тюменская слобода»</footer></blockquote>
         <blockquote class="rev"><p>Просил глянец, замерщик отговорил: комната маленькая, будет отсвечивать люстра. Поставили сатин, доволен.</p><footer>Сергей, ул. Червишевский тракт</footer></blockquote>
@@ -246,13 +256,13 @@
       </div>
     </div>
     <div>
-      <header class="head"><h2>Вопросы</h2></header>
+      <header class="head" data-rv="up"><h2>Вопросы</h2></header>
       <div class="faq">
-        <details class="qa"><summary>Сколько сантиметров съедает потолок?</summary><p>Минимум 3,5 см — это высота профиля. Если ставим точечные светильники, нужно 5–7 см под корпус. В комнате 2,5 м это почти незаметно, а глянец наоборот визуально поднимает.</p></details>
-        <details class="qa"><summary>Мебель надо выносить?</summary><p>Нет, достаточно отодвинуть от стен на полметра и накрыть — плёнку привозим свою. Выносим только то, что мешает поставить стремянку.</p></details>
-        <details class="qa"><summary>А если соседи затопят?</summary><p>Полотно держит воду и не даёт ей залить комнату. Позвоните — приедем, аккуратно сольём через светильник и вернём потолок в прежний вид. Обычно в тот же день.</p></details>
-        <details class="qa"><summary>Пахнет ли после монтажа?</summary><p>Первые пару часов есть лёгкий запах ПВХ, к вечеру выветривается. Тканевые потолки не пахнут вообще.</p></details>
-        <details class="qa"><summary>Работаете с новостройками без отделки?</summary><p>Да, но лучше после штукатурки и шпаклёвки стен — иначе профиль придётся снимать. Порядок подскажем на замере бесплатно.</p></details>
+        <details class="qa" data-rv="up"><summary>Сколько сантиметров съедает потолок?</summary><p>Минимум 3,5 см — это высота профиля. Если ставим точечные светильники, нужно 5–7 см под корпус. В комнате 2,5 м это почти незаметно, а глянец наоборот визуально поднимает.</p></details>
+        <details class="qa" data-rv="up"><summary>Мебель надо выносить?</summary><p>Нет, достаточно отодвинуть от стен на полметра и накрыть — плёнку привозим свою. Выносим только то, что мешает поставить стремянку.</p></details>
+        <details class="qa" data-rv="up"><summary>А если соседи затопят?</summary><p>Полотно держит воду и не даёт ей залить комнату. Позвоните — приедем, аккуратно сольём через светильник и вернём потолок в прежний вид. Обычно в тот же день.</p></details>
+        <details class="qa" data-rv="up"><summary>Пахнет ли после монтажа?</summary><p>Первые пару часов есть лёгкий запах ПВХ, к вечеру выветривается. Тканевые потолки не пахнут вообще.</p></details>
+        <details class="qa" data-rv="up"><summary>Работаете с новостройками без отделки?</summary><p>Да, но лучше после штукатурки и шпаклёвки стен — иначе профиль придётся снимать. Порядок подскажем на замере бесплатно.</p></details>
       </div>
     </div>
   </div>
@@ -262,7 +272,7 @@
 <section class="cta" id="form">
   <div class="wrap cta__in">
     <div>
-      <h2>Вызвать замерщика</h2>
+      <h2 data-rv="up">Вызвать замерщика</h2>
       <p>Бесплатно, без обязательств. Замерщик приедет со всеми образцами полотна и назовёт точную цену на месте.</p>
       <a class="tel tel--big" href="tel:+73452000000">+7 (3452) 00-00-00</a>
       <p class="cta__addr">Тюмень, ул. Одесская, 48 · ежедневно 9:00–20:00</p>

@@ -2,6 +2,53 @@
 (function () {
   'use strict';
 
+  /* ---------- Проявление блоков при прокрутке ----------
+     Стартовые состояния включает класс rv-on из <head>. Элементы с clip-path
+     имеют нулевую видимую площадь, поэтому за ними следим через родителя. */
+  (function reveal() {
+    var root = document.documentElement;
+    var els = document.querySelectorAll('[data-rv]');
+    if (!els.length) return;
+    if (!root.classList.contains('rv-on') || !('IntersectionObserver' in window)) {
+      root.classList.remove('rv-on');
+      return;
+    }
+    root.dataset.rvReady = '1';
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-rv-stagger]'), function (group) {
+      var i = 0;
+      Array.prototype.forEach.call(group.children, function (child) {
+        var t = child.matches('[data-rv]') ? child : child.querySelector('[data-rv]');
+        if (t) t.style.setProperty('--rv-i', i++);
+      });
+    });
+
+    var clipped = { mask: 1, img: 1, wipe: 1 };
+    var watched = [];
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var list = en.target.__rv || [];
+        for (var i = 0; i < list.length; i++) list[i].classList.add('rv-in');
+        io.unobserve(en.target);
+        delete en.target.__rv;
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
+
+    Array.prototype.forEach.call(els, function (e) {
+      var host = (clipped[e.dataset.rv] && e.parentElement) ? e.parentElement : e;
+      if (!host.__rv) { host.__rv = []; watched.push(host); }
+      host.__rv.push(e);
+    });
+    watched.forEach(function (h) { io.observe(h); });
+
+    addEventListener('scroll', function bottom() {
+      if (scrollY + innerHeight < document.documentElement.scrollHeight - 4) return;
+      removeEventListener('scroll', bottom);
+      Array.prototype.forEach.call(els, function (e) { e.classList.add('rv-in'); });
+    }, { passive: true });
+  })();
+
   /* ---------- Мобильное меню ---------- */
   var burger = document.querySelector('.burger');
   var mnav = document.getElementById('mnav');
@@ -29,28 +76,28 @@
       name: 'Современный сканди',
       text: 'Много света, светлое дерево, простые формы и минимум декора — но не стерильно: текстиль, керамика, зелень. Такой интерьер прощает беспорядок и хорошо переживает смену мебели.',
       tags: ['Светлое дерево', 'Белые стены', 'Много текстиля', 'Открытые полки'],
-      img: 'img/p3.webp',
+      img: 'img/p3-660.webp',
       alt: 'Светлая гостиная в скандинавском стиле'
     },
     japandi: {
       name: 'Японди',
       text: 'Спокойный гибрид японского минимализма и скандинавской теплоты. Приглушённые природные цвета, низкая мебель, натуральные материалы, почти нет вещей на виду. Дом, в который приходишь выдохнуть.',
       tags: ['Тёмное дерево', 'Природные оттенки', 'Низкая мебель', 'Ничего лишнего'],
-      img: 'img/p2.webp',
+      img: 'img/p2-660.webp',
       alt: 'Гостиная в стиле японди'
     },
     classic: {
       name: 'Современная классика',
       text: 'Симметрия, молдинги, качественные ткани и мебель, которую не стыдно оставить детям. Работает и в новостройке, и в старом фонде, но требует высоких потолков и внимания к деталям.',
       tags: ['Молдинги', 'Глубокие цвета', 'Симметрия', 'Мягкая мебель'],
-      img: 'img/p4.webp',
+      img: 'img/p4-660.webp',
       alt: 'Гостиная в стиле современной классики'
     },
     minimal: {
       name: 'Мягкий минимализм',
       text: 'Ровные плоскости, встроенное хранение, мебель без ручек, два-три цвета на всю квартиру. Кажется простым, но на деле самый требовательный к качеству ремонта: любая кривая стена сразу видна.',
       tags: ['Скрытое хранение', 'Два-три цвета', 'Ровные плоскости', 'Мебель без ручек'],
-      img: 'img/p6.webp',
+      img: 'img/p6-700.webp',
       alt: 'Минималистичный интерьер'
     }
   };
