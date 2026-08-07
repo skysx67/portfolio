@@ -148,6 +148,7 @@ h3{font-size:clamp(18px,1.7vw,23px);font-weight:600}
 .sec__head p{margin-top:14px;color:var(--tx-mut);font-size:17px}
 .sec__head--light p{color:var(--tx-light)}
 .num{display:inline-block;font-size:12px;letter-spacing:.2em;color:var(--orange-tx);margin-bottom:10px}
+.sec--dark .num,.lead .num{color:var(--orange)}
 
 /* --- калькулятор --- */
 .calc{display:grid;grid-template-columns:1fr 372px;gap:clamp(16px,2.2vw,26px);align-items:start}
