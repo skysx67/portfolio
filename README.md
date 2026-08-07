@@ -55,6 +55,16 @@
 - **Шрифты локальные.** Никаких `fonts.googleapis.com` — это было 590 мс
   блокировки рендера. Подмножества `latin` + `cyrillic`, `font-display: swap`,
   критичные начертания в `<link rel="preload">`.
+- **Шрифты урезаны по глифам** (`pyftsubset`): 1,06 МБ → 0,56 МБ. Кириллица
+  оставлена целиком, латиница сжата до цифр, пунктуации, `₽`, стрелок и `✓`.
+  Если будете добавлять начертание — прогоните его тем же способом, иначе
+  один файл потянет на 50 КБ вместо 12:
+
+  ```bash
+  python -m pip install fonttools brotli
+  python -m fontTools.subset шрифт.woff2 --unicodes=U+0400-045F,U+0490-0491,U+2116 \
+    --layout-features=kern,liga,tnum --flavor=woff2 --no-hinting --output-file=шрифт.woff2
+  ```
 - **Картинки в WebP** и обрезаны до реальных размеров (было 5,3 МБ, стало 2,0 МБ).
   У каждой проставлены `width`/`height`, чтобы не прыгала вёрстка.
 - **LCP-картинка** каждой страницы идёт с `fetchpriority="high"` и `preload`,
