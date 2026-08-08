@@ -61,6 +61,146 @@
     }, { passive: true });
   })();
 
+  /* --- кольцо, догоняющее курсор ---
+     Только мышь: на тач-экранах курсора нет, а на пере оно мешает. Системный
+     курсор оставляем на месте — прятать его значит отнимать точку клика. */
+  (function ring() {
+    if (!matchMedia('(pointer:fine)').matches) return;
+    if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+    var el = document.createElement('div');
+    el.className = 'cursor';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<i></i>';
+    document.body.appendChild(el);
+
+    var tx = 0, ty = 0, x = 0, y = 0, started = false, raf = 0;
+    var R = 23;                       // половина размера кольца
+
+    function tick() {
+      x += (tx - x) * 0.13;           // отставание: чем меньше, тем ленивее
+      y += (ty - y) * 0.13;
+      el.style.transform = 'translate3d(' + (x - R) + 'px,' + (y - R) + 'px,0)';
+      raf = (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) ? requestAnimationFrame(tick) : 0;
+    }
+
+    addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      tx = e.clientX; ty = e.clientY;
+      if (!started) {                 // первый кадр ставим без разгона
+        started = true; x = tx; y = ty;
+        el.style.transform = 'translate3d(' + (x - R) + 'px,' + (y - R) + 'px,0)';
+      }
+      el.classList.add('is-on');      // вернулись в окно — снова показываем
+      if (!raf) raf = requestAnimationFrame(tick);
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', function () { el.classList.remove('is-on'); });
+  })();
+
+  /* --- просмотр работ прямо на странице ---
+     Демо лежат на том же домене, поэтому открываются в iframe как есть:
+     калькулятор считает, квиз проходится. Уходить со страницы не нужно. */
+  (function viewer() {
+    var box = document.getElementById('viewer');
+    var cases = [].slice.call(document.querySelectorAll('.case[data-view]'));
+    if (!box || !cases.length) return;
+
+    var frame = document.getElementById('vFrame');
+    var wait = document.getElementById('vWait');
+    var elTitle = document.getElementById('vTitle');
+    var elUrl = document.getElementById('vUrl');
+    var elCount = document.getElementById('vCount');
+    var elOpen = document.getElementById('vOpen');
+    var i = 0, back = null;
+
+    var list = cases.map(function (c) {
+      return { href: c.dataset.view, title: c.dataset.viewTitle, url: c.dataset.viewUrl };
+    });
+
+    var timer = 0;
+
+    function show(n) {
+      i = (n + list.length) % list.length;
+      var it = list[i];
+      elTitle.textContent = it.title;
+      elUrl.textContent = it.url;
+      elCount.textContent = (i + 1) + ' / ' + list.length;
+      elOpen.href = it.href;
+      wait.hidden = false;
+      wait.textContent = 'Загружаю сайт…';
+      frame.src = it.href;
+      /* Если сайт не открылся во врезке (нет сети, чужой домен запретил
+         вставку) — не оставляем человека смотреть на «загружаю». */
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        if (wait.hidden) return;
+        wait.textContent = 'Сайт не открылся во врезке — откройте его в новой вкладке';
+      }, 8000);
+    }
+
+    frame.addEventListener('load', function () {
+      if (frame.src !== 'about:blank') { wait.hidden = true; clearTimeout(timer); }
+    });
+
+    function open(n) {
+      back = document.activeElement;
+      box.hidden = false;
+      document.documentElement.classList.add('viewer-open');
+      document.body.style.overflow = 'hidden';
+      show(n);
+      document.getElementById('vClose').focus();
+    }
+
+    function close() {
+      box.hidden = true;
+      document.documentElement.classList.remove('viewer-open');
+      document.body.style.overflow = '';
+      clearTimeout(timer);
+      frame.src = 'about:blank';        // выгружаем сайт, чтобы не жрал память
+      if (back && back.focus) back.focus();
+    }
+
+    cases.forEach(function (c, n) {
+      var btn = c.querySelector('[data-view-open]');
+      if (btn) btn.addEventListener('click', function () { open(n); });
+
+      var shot = c.querySelector('.case__shot a');
+      if (shot) shot.addEventListener('click', function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;  // Ctrl+клик — как обычно
+        e.preventDefault();
+        open(n);
+      });
+    });
+
+    document.getElementById('vPrev').addEventListener('click', function () { show(i - 1); });
+    document.getElementById('vNext').addEventListener('click', function () { show(i + 1); });
+    document.getElementById('vClose').addEventListener('click', close);
+
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (box.hidden) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key === 'ArrowLeft') { show(i - 1); return; }
+      if (e.key === 'ArrowRight') { show(i + 1); return; }
+      if (e.key !== 'Tab') return;
+      var can = box.querySelectorAll('button, a[href], iframe');
+      var first = can[0], last = can[can.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    /* свайп по шапке окна — на телефоне листать стрелками неудобно */
+    var sx = 0, sy = 0;
+    var bar = box.querySelector('.viewer__bar');
+    bar.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    bar.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) show(dx < 0 ? i + 1 : i - 1);
+    }, { passive: true });
+  })();
+
   /* --- мобильное меню --- */
   var burger = document.querySelector('.burger');
   var mnav = document.getElementById('mnav');

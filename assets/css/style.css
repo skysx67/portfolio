@@ -397,6 +397,92 @@ html:not(.rv-on) .case::before,html:not(.rv-on) .case:last-child::after{transfor
   @keyframes hdr-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 }
 
+/* --- кольцо за курсором ---
+   Догоняет мышь с отставанием, еле различимое. Системный курсор не прячем:
+   без него человек теряет точку клика. Только для мыши, только если человек
+   не просил убрать анимации — обе проверки в app.js. */
+.cursor{
+  position:fixed;left:0;top:0;width:46px;height:46px;z-index:400;
+  pointer-events:none;opacity:0;transition:opacity .4s var(--e);
+}
+.cursor.is-on{opacity:1}
+.cursor i{
+  display:block;width:100%;height:100%;border-radius:50%;
+  border:1px solid rgba(142,29,44,.34);background:rgba(142,29,44,.045);
+  transition:transform .38s var(--e),background-color .38s var(--e),border-color .38s var(--e);
+}
+body:has(a:hover,button:hover,summary:hover,input:hover,textarea:hover) .cursor i{
+  transform:scale(1.45);background:rgba(142,29,44,.085);border-color:rgba(142,29,44,.5);
+}
+/* над окном просмотра кольцо прячем: события мыши уходят в iframe
+   и оно всё равно замирает на его краю */
+.viewer-open .cursor{opacity:0}
+
+/* --- просмотрщик работ --- */
+.viewer{
+  position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;
+  gap:14px;padding:clamp(12px,2vw,26px);background:rgba(15,14,10,.93);
+  backdrop-filter:blur(3px);
+}
+.viewer[hidden]{display:none}
+.viewer__win{
+  flex:1;min-height:0;display:flex;flex-direction:column;
+  background:var(--paper);border:1px solid rgba(244,241,234,.22);overflow:hidden;
+}
+.viewer__bar{
+  display:flex;align-items:center;gap:clamp(10px,2vw,26px);flex:none;
+  padding:10px clamp(10px,1.4vw,16px);border-bottom:1px solid var(--rule);
+  background:var(--paper-2);
+}
+.viewer__id{display:flex;align-items:baseline;gap:12px;min-width:0;flex:1}
+.viewer__id b{font-family:var(--display);font-weight:400;font-size:19px;white-space:nowrap}
+.viewer__id span{
+  font:400 11px/1 var(--mono);letter-spacing:.06em;color:var(--tx-mut);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.viewer__nav{display:flex;align-items:center;gap:6px;flex:none}
+.viewer__arrow{
+  width:38px;height:32px;display:grid;place-items:center;cursor:pointer;
+  border:1px solid var(--rule);background:none;color:var(--ink);
+  transition:background-color .3s var(--e),border-color .3s var(--e),color .3s var(--e);
+}
+.viewer__arrow:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.viewer__count{font:400 11px/1 var(--mono);letter-spacing:.1em;color:var(--tx-mut);min-width:44px;text-align:center}
+.viewer__out{
+  display:inline-flex;align-items:center;min-height:32px;
+  font:400 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--wine);text-decoration:none;border-bottom:1px solid var(--wine);
+  white-space:nowrap;flex:none;
+}
+.viewer__x{
+  width:34px;height:32px;display:grid;place-items:center;flex:none;cursor:pointer;
+  border:1px solid var(--rule);background:none;color:var(--ink);
+  transition:background-color .3s var(--e),border-color .3s var(--e),color .3s var(--e);
+}
+.viewer__x:hover{background:var(--wine);border-color:var(--wine);color:#fff}
+.viewer__stage{position:relative;flex:1;min-height:0;background:var(--paper-2)}
+.viewer__stage iframe{width:100%;height:100%;border:0;display:block;background:var(--paper)}
+.viewer__wait{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font:400 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--tx-mut);
+}
+.viewer__wait[hidden]{display:none}
+.viewer__hint{
+  flex:none;text-align:center;font-size:13px;line-height:1.5;
+  color:rgba(244,241,234,.6);max-width:70em;margin-inline:auto;
+}
+.viewer__hint b{color:rgba(244,241,234,.85)}
+.case__go{display:flex;align-items:center;gap:clamp(14px,2vw,26px);flex-wrap:wrap}
+.case__shot a{cursor:zoom-in}
+
+@media (max-width:660px){
+  .viewer{padding:8px;gap:9px}
+  .viewer__bar{flex-wrap:wrap;row-gap:8px}
+  .viewer__id{flex:1 0 100%}
+  .viewer__out{font-size:10px}
+  .viewer__hint{font-size:12px}
+}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}

@@ -122,7 +122,7 @@
 
     <ol class="cases">
 
-      <li class="case" data-rv="row" data-rv-stagger>
+      <li class="case" data-rv="row" data-rv-stagger data-view="https://skysx67.github.io/perfecto-mebel/" data-view-title="Перфекто" data-view-url="skysx67.github.io/perfecto-mebel">
         <span class="case__num" data-rv="fig" aria-hidden="true">01</span>
         <div class="case__body" data-rv="up">
           <p class="case__niche">Мебель на заказ · действующий сайт</p>
@@ -135,7 +135,7 @@
             <li>Микроразметка и OG-превью</li>
             <li>PDF-гид как лид-магнит</li>
           </ul>
-          <p class="case__go"><a class="btn btn--sm" href="https://skysx67.github.io/perfecto-mebel/" target="_blank" rel="noopener">Открыть сайт</a></p>
+          <p class="case__go"><button class="btn btn--sm" type="button" data-view-open>Пролистать здесь</button><a class="ulink" href="https://skysx67.github.io/perfecto-mebel/" target="_blank" rel="noopener">Открыть в новой вкладке</a></p>
         </div>
         <figure class="case__shot" data-rv="img">
           <a href="https://skysx67.github.io/perfecto-mebel/" target="_blank" rel="noopener">
@@ -148,7 +148,7 @@
         </figure>
       </li>
 
-      <li class="case case--flip" data-rv="row" data-rv-stagger>
+      <li class="case case--flip" data-rv="row" data-rv-stagger data-view="demo/remont/" data-view-title="Ровно" data-view-url="demo/remont">
         <span class="case__num" data-rv="fig" aria-hidden="true">02</span>
         <div class="case__body" data-rv="up">
           <p class="case__niche">Ремонт квартир под ключ · демо</p>
@@ -160,7 +160,7 @@
             <li>Расчёт подставляется в заявку</li>
             <li>Прорабская вёрстка: узкие прописные, жёсткие углы, ноль скруглений</li>
           </ul>
-          <p class="case__go"><a class="btn btn--sm" href="demo/remont/">Смотреть демо</a></p>
+          <p class="case__go"><button class="btn btn--sm" type="button" data-view-open>Пролистать здесь</button><a class="ulink" href="demo/remont/">Открыть в новой вкладке</a></p>
         </div>
         <figure class="case__shot" data-rv="img">
           <a href="demo/remont/"><img src="assets/img/case-remont-1200.webp"
@@ -171,7 +171,7 @@
         </figure>
       </li>
 
-      <li class="case" data-rv="row" data-rv-stagger>
+      <li class="case" data-rv="row" data-rv-stagger data-view="demo/potolki/" data-view-title="Потолок 72" data-view-url="demo/potolki">
         <span class="case__num" data-rv="fig" aria-hidden="true">03</span>
         <div class="case__body" data-rv="up">
           <p class="case__niche">Натяжные потолки · демо</p>
@@ -183,7 +183,7 @@
             <li>Готовые расчёты по комнатам</li>
             <li>Галерея-мозаика работ</li>
           </ul>
-          <p class="case__go"><a class="btn btn--sm" href="demo/potolki/">Смотреть демо</a></p>
+          <p class="case__go"><button class="btn btn--sm" type="button" data-view-open>Пролистать здесь</button><a class="ulink" href="demo/potolki/">Открыть в новой вкладке</a></p>
         </div>
         <figure class="case__shot" data-rv="img">
           <a href="demo/potolki/"><img src="assets/img/case-potolki-1200.webp"
@@ -194,7 +194,7 @@
         </figure>
       </li>
 
-      <li class="case case--flip" data-rv="row" data-rv-stagger>
+      <li class="case case--flip" data-rv="row" data-rv-stagger data-view="demo/design/" data-view-title="Северова" data-view-url="demo/design">
         <span class="case__num" data-rv="fig" aria-hidden="true">04</span>
         <div class="case__body" data-rv="up">
           <p class="case__niche">Дизайн интерьера · демо</p>
@@ -206,7 +206,7 @@
             <li>Крупная сетка проектов</li>
             <li>Журнальная типографика на дидоне</li>
           </ul>
-          <p class="case__go"><a class="btn btn--sm" href="demo/design/">Смотреть демо</a></p>
+          <p class="case__go"><button class="btn btn--sm" type="button" data-view-open>Пролистать здесь</button><a class="ulink" href="demo/design/">Открыть в новой вкладке</a></p>
         </div>
         <figure class="case__shot" data-rv="img">
           <a href="demo/design/"><img src="assets/img/case-design-1200.webp"
@@ -433,6 +433,36 @@
 </section>
 
 </main>
+
+<!-- ПРОСМОТРЩИК РАБОТ: настоящий сайт в рамке, не уходя со страницы -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="vTitle" hidden>
+  <div class="viewer__win">
+    <div class="viewer__bar">
+      <p class="viewer__id">
+        <b id="vTitle">Перфекто</b>
+        <span id="vUrl">skysx67.github.io/perfecto-mebel</span>
+      </p>
+      <div class="viewer__nav">
+        <button class="viewer__arrow" type="button" id="vPrev" aria-label="Предыдущая работа">
+          <svg width="17" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true"><path d="M6 1 1 6l5 5M1 6h15" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+        <span class="viewer__count" id="vCount" aria-live="polite">1 / 4</span>
+        <button class="viewer__arrow" type="button" id="vNext" aria-label="Следующая работа">
+          <svg width="17" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true"><path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+      </div>
+      <a class="viewer__out" id="vOpen" href="#" target="_blank" rel="noopener">В новой вкладке&#8202;↗</a>
+      <button class="viewer__x" type="button" id="vClose" aria-label="Закрыть просмотр">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.4"/></svg>
+      </button>
+    </div>
+    <div class="viewer__stage">
+      <iframe id="vFrame" title="Просмотр работы" src="about:blank"></iframe>
+      <p class="viewer__wait" id="vWait">Загружаю сайт…</p>
+    </div>
+  </div>
+  <p class="viewer__hint">Внутри окна работает всё: калькулятор считает, квиз проходится, формы проверяются. Листайте колесом внутри окна, между работами — стрелками&#160;← →, закрыть — Esc.</p>
+</div>
 
 <footer class="ftr">
   <div class="wrap ftr__in" data-rv="up">
