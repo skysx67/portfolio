@@ -402,17 +402,37 @@ html:not(.rv-on) .case::before,html:not(.rv-on) .case:last-child::after{transfor
    без него человек теряет точку клика. Только для мыши, только если человек
    не просил убрать анимации — обе проверки в app.js. */
 .cursor{
-  position:fixed;left:0;top:0;width:46px;height:46px;z-index:400;
-  pointer-events:none;opacity:0;transition:opacity .4s var(--e);
+  position:fixed;left:0;top:0;width:108px;height:108px;z-index:400;
+  pointer-events:none;opacity:0;transition:opacity .45s var(--e);
+  will-change:transform;
 }
 .cursor.is-on{opacity:1}
+/* Никакого контура: бордовый плотнее в середине и уходит в ноль задолго до
+   края элемента. Три вещи, без которых лезет кольцо:
+   1) последний стоп — тот же цвет с нулевой альфой, а не `transparent`,
+      иначе на спуске появляется серая кайма;
+   2) альфа идёт по кривой A*(1-t²)² — на краю производная нулевая, поэтому
+      спуск не даёт заметной границы (ступенчатые стопы её давали);
+   3) blur сверху добивает 8-битную полосчатость на тёмных секциях. */
 .cursor i{
   display:block;width:100%;height:100%;border-radius:50%;
-  border:1px solid rgba(142,29,44,.34);background:rgba(142,29,44,.045);
-  transition:transform .38s var(--e),background-color .38s var(--e),border-color .38s var(--e);
+  background:radial-gradient(circle at 50% 50%,
+    rgba(142,29,44,.2800) 0%,
+    rgba(142,29,44,.2744) 10%,
+    rgba(142,29,44,.2580) 19%,
+    rgba(142,29,44,.2319) 29%,
+    rgba(142,29,44,.1976) 38%,
+    rgba(142,29,44,.1575) 48%,
+    rgba(142,29,44,.1147) 58%,
+    rgba(142,29,44,.0728) 67%,
+    rgba(142,29,44,.0363) 77%,
+    rgba(142,29,44,.0101) 86%,
+    rgba(142,29,44,0) 96%);
+  filter:blur(8px);
+  transition:transform .45s var(--e),opacity .45s var(--e);
 }
 body:has(a:hover,button:hover,summary:hover,input:hover,textarea:hover) .cursor i{
-  transform:scale(1.45);background:rgba(142,29,44,.085);border-color:rgba(142,29,44,.5);
+  transform:scale(1.3);
 }
 /* над окном просмотра кольцо прячем: события мыши уходят в iframe
    и оно всё равно замирает на его краю */
