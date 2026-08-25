@@ -6,6 +6,25 @@
 
   var TG = 'skysx0207';
 
+  /* --- рекомендации друзей / UTM ---
+     Одна страница обслуживает все персональные ссылки. Метка остаётся в URL,
+     а имя рекомендателя добавляется и в обычные Telegram-ссылки, и в форму. */
+  var referrals = {
+    alexandr: 'Александра',
+    ivan: 'Ивана',
+    aram: 'Арама',
+    dasha: 'Даши'
+  };
+  var utmSource = new URLSearchParams(location.search).get('utm_source') || '';
+  var referral = referrals[utmSource.toLowerCase()] || '';
+
+  if (referral) {
+    var directText = 'Здравствуйте! Хочу обсудить сайт.\n\n(по рекомендации ' + referral + ')';
+    Array.prototype.forEach.call(document.querySelectorAll('a[href^="https://t.me/' + TG + '"]'), function (link) {
+      link.href = 'https://t.me/' + TG + '?text=' + encodeURIComponent(directText);
+    });
+  }
+
   /* --- проявление блоков при прокрутке ---
      Стартовые состояния включает класс rv-on, он ставится крошечным скриптом
      в <head>: иначе страница успевает моргнуть готовым видом. Здесь только
@@ -254,7 +273,7 @@
     var text = 'Здравствуйте! Меня зовут ' + name + '.\n' +
                'Занимаюсь: ' + biz + '.' +
                (task ? '\nЗадача: ' + task : '') +
-               '\n\n(написал с сайта)';
+               '\n\n(написал с сайта' + (referral ? ', по рекомендации ' + referral : '') + ')';
 
     window.open('https://t.me/' + TG + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
   });
