@@ -1,22 +1,38 @@
 /* Портфолио — мобильное меню и сборка сообщения в Telegram.
-   Сервера нет, поэтому форма ничего не отправляет: она собирает текст
-   и открывает чат с уже готовым сообщением. Человек жмёт «отправить» сам. */
+   Данные формы никуда не отправляются: она собирает текст и открывает чат
+   с уже готовым сообщением. Сервер получает только анонимный код рекомендации. */
 (function () {
   'use strict';
 
   var TG = 'skysx0207';
+  var REFERRAL_ENDPOINT = 'https://portfolio-referrals.pages.dev/';
 
   /* --- рекомендации друзей / UTM ---
-     В ссылке и сообщении нет имени рекомендателя: только нейтральный код.
-     Поэтому пересланная дальше ссылка не сообщает клиенту незнакомое имя. */
+     Клиент не видит ни имени рекомендателя, ни служебного кода. Сервер получает
+     только событие и код из ссылки — без имени, телефона и текста формы. */
   var referralCodes = { '7k2': '7K2', '4m8': '4M8', '9q3': '9Q3', '6v1': '6V1' };
   var utmContent = new URLSearchParams(location.search).get('utm_content') || '';
   var referralCode = referralCodes[utmContent.toLowerCase()] || '';
 
+  function notifyReferral(event) {
+    if (!referralCode || typeof fetch !== 'function') return;
+    fetch(REFERRAL_ENDPOINT, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'omit',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event: event, ref: referralCode, page: location.pathname })
+    }).catch(function () {
+      /* Уведомление не должно мешать человеку открыть Telegram. */
+    });
+  }
+
   if (referralCode) {
-    var directText = 'Здравствуйте! Хочу обсудить сайт.\n\nНомер обращения: ' + referralCode;
+    var directText = 'Здравствуйте! Хочу обсудить сайт.';
     Array.prototype.forEach.call(document.querySelectorAll('a[href^="https://t.me/' + TG + '"]'), function (link) {
       link.href = 'https://t.me/' + TG + '?text=' + encodeURIComponent(directText);
+      link.addEventListener('click', function () { notifyReferral('telegram_click'); });
     });
   }
 
@@ -268,9 +284,9 @@
     var text = 'Здравствуйте! Меня зовут ' + name + '.\n' +
                'Занимаюсь: ' + biz + '.' +
                (task ? '\nЗадача: ' + task : '') +
-               '\n\n(написал с сайта)' +
-               (referralCode ? '\nНомер обращения: ' + referralCode : '');
+               '\n\n(написал с сайта)';
 
+    notifyReferral('form_opened_telegram');
     window.open('https://t.me/' + TG + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
   });
 })();

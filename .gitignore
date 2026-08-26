@@ -7,4 +7,5 @@ node_modules/
 *.log
 .dev.vars
 .dev.vars.*
+.wrangler/
 .claude/settings.local.json
