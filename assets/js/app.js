@@ -7,19 +7,14 @@
   var TG = 'skysx0207';
 
   /* --- рекомендации друзей / UTM ---
-     Одна страница обслуживает все персональные ссылки. Метка остаётся в URL,
-     а имя рекомендателя добавляется и в обычные Telegram-ссылки, и в форму. */
-  var referrals = {
-    alexandr: 'Александра',
-    ivan: 'Ивана',
-    aram: 'Арама',
-    dasha: 'Даши'
-  };
-  var utmSource = new URLSearchParams(location.search).get('utm_source') || '';
-  var referral = referrals[utmSource.toLowerCase()] || '';
+     В ссылке и сообщении нет имени рекомендателя: только нейтральный код.
+     Поэтому пересланная дальше ссылка не сообщает клиенту незнакомое имя. */
+  var referralCodes = { '7k2': '7K2', '4m8': '4M8', '9q3': '9Q3', '6v1': '6V1' };
+  var utmContent = new URLSearchParams(location.search).get('utm_content') || '';
+  var referralCode = referralCodes[utmContent.toLowerCase()] || '';
 
-  if (referral) {
-    var directText = 'Здравствуйте! Хочу обсудить сайт.\n\n(по рекомендации ' + referral + ')';
+  if (referralCode) {
+    var directText = 'Здравствуйте! Хочу обсудить сайт.\n\nНомер обращения: ' + referralCode;
     Array.prototype.forEach.call(document.querySelectorAll('a[href^="https://t.me/' + TG + '"]'), function (link) {
       link.href = 'https://t.me/' + TG + '?text=' + encodeURIComponent(directText);
     });
@@ -273,7 +268,8 @@
     var text = 'Здравствуйте! Меня зовут ' + name + '.\n' +
                'Занимаюсь: ' + biz + '.' +
                (task ? '\nЗадача: ' + task : '') +
-               '\n\n(написал с сайта' + (referral ? ', по рекомендации ' + referral : '') + ')';
+               '\n\n(написал с сайта)' +
+               (referralCode ? '\nНомер обращения: ' + referralCode : '');
 
     window.open('https://t.me/' + TG + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
   });
