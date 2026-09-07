@@ -283,6 +283,10 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .ftr__nav a{text-decoration:none;padding:7px 0}
 .ftr__nav a:hover{color:var(--paper)}
 .ftr__note{font-size:13px;line-height:1.65;color:rgba(244,241,234,.6);text-align:right}
+.ftr__legal{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 24px;margin-top:30px;padding-top:20px;border-top:1px solid var(--rule-l);font-size:13px;line-height:1.6}
+.ftr__legal p{flex:1 1 280px}
+.ftr__legal a{color:var(--paper);padding:5px 0;text-underline-offset:4px}
+.ftr :focus-visible{outline-color:#E8A9B1}
 
 /* --- адаптив --- */
 @media (max-width:1100px){
