@@ -28,7 +28,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
 body{
   margin:0;background:var(--cream);color:var(--tx);
   font:400 17px/1.7 'Golos Text',system-ui,sans-serif;
@@ -91,7 +91,7 @@ h1 em{font-style:normal;color:#E8B08A}
 .demobar a:hover{text-decoration:underline}
 
 /* ---------- Шапка ---------- */
-.hdr{position:absolute;top:38px;left:0;right:0;z-index:50;color:var(--cream)}
+.hdr{position:absolute;top:auto;left:0;right:0;z-index:50;color:var(--cream)}
 .hdr__in{display:flex;align-items:center;gap:28px;min-height:70px}
 .logo{
   display:flex;flex-direction:column;gap:3px;text-decoration:none;flex:none;
@@ -126,6 +126,20 @@ h1 em{font-style:normal;color:#E8B08A}
   font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
 }
 .hero__meta i{width:4px;height:4px;background:var(--clay);display:block}
+
+/* Демо-плашка остаётся над страницей; сам hero заполняет экран целиком. */
+@media (min-width:901px){
+  .hero{height:100vh;height:100svh;min-height:0}
+}
+
+@media (min-width:901px) and (max-height:760px){
+  h1{font-size:clamp(46px,5.2vw,64px)}
+  .hero__in{padding-top:70px;padding-bottom:24px}
+  .eyebrow{margin-bottom:12px}
+  .hero__sub{margin-top:16px}
+  .hero__actions{margin-top:24px}
+  .hero__meta{padding-block:11px}
+}
 
 /* ---------- Секции ---------- */
 .sec{padding:var(--pad) 0}
@@ -279,7 +293,6 @@ h1 em{font-style:normal;color:#E8B08A}
 @media (max-width:900px){
   .nav{display:none}
   .burger{display:block}
-  .hdr{top:30px}
   .manifest__in,.about,.contact,.quiz__result{grid-template-columns:1fr}
   .about__img img{aspect-ratio:4/3}
   .quiz__result img{aspect-ratio:16/9}
@@ -294,6 +307,14 @@ h1 em{font-style:normal;color:#E8B08A}
   .quiz{padding:22px 18px}
   .ftr__in{grid-template-columns:1fr;gap:24px}
   .ftr__note{text-align:left}
+}
+
+@media (max-width:660px){
+  @supports (grid-template-rows:subgrid){
+    .svc,.flow{grid-template-rows:none;row-gap:1px}
+    .svc__i{display:flex;grid-row:auto;grid-template-rows:none}
+    .flow li{grid-row:auto;grid-template-rows:none}
+  }
 }
 
 @media (prefers-reduced-motion:reduce){

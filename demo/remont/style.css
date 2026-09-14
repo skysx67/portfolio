@@ -133,6 +133,26 @@ h3{font-size:clamp(18px,1.7vw,23px);font-weight:600}
 .ticker__row i{width:6px;height:6px;background:var(--orange);flex:none;display:block}
 @keyframes slide{to{transform:translateX(-50%)}}
 
+/* На десктопе шапка, hero и бегущая строка вместе занимают один экран. */
+@media (min-width:901px){
+  .hero{
+    height:calc(100vh - 110px);height:calc(100svh - 110px);
+    display:flex;align-items:center;
+    padding:clamp(20px,4.2vh,52px) 0;
+  }
+  .hero__in{width:min(1240px,100% - 40px)}
+  .ticker{height:42px;padding:0;display:flex;align-items:center}
+}
+
+@media (min-width:901px) and (max-height:760px){
+  h1{font-size:clamp(44px,5.5vw,68px)}
+  .tag{margin-bottom:14px}
+  .subhead{margin-top:14px;line-height:1.4}
+  .hero__cta{margin-top:20px}
+  .hero__facts{margin-top:24px}
+  .hero__facts li{padding-top:12px}
+}
+
 /* --- секции --- */
 .sec{padding:var(--pad) 0}
 .sec--paper{background:var(--concrete-2)}
@@ -304,8 +324,14 @@ input[type=range]::-moz-range-thumb{width:16px;height:26px;border-radius:0;backg
 @media (max-width:900px){
   .nav,.hdr__right{display:none}
   .burger{display:block;margin-left:auto}
-  .hero__in{grid-template-columns:1fr}
-  .hero__media{order:-1}
+  .hero__in{display:flex;flex-direction:column}
+  .hero__text{display:contents}
+  .hero__text .tag{order:1;align-self:flex-start}
+  .hero__text h1{order:2}
+  .hero__text .subhead{order:3}
+  .hero__media{order:4;margin-top:28px}
+  .hero__facts{order:5}
+  .hero__cta{order:6}
   .hero__media img{aspect-ratio:16/10}
   .hero__badge{left:auto;right:10px;bottom:-14px}
   .works,.revs{grid-template-columns:repeat(2,1fr)}

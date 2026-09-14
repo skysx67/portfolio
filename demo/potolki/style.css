@@ -110,6 +110,25 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 .hero__img{max-width:1220px;margin:0 auto;padding:0 20px}
 .hero__img img{width:100%;aspect-ratio:24/9;object-fit:cover;object-position:50% 28%;border-radius:var(--r) var(--r) 0 0;border:1px solid var(--line);border-bottom:0}
 
+/* После демо-плашки шапка и hero вместе занимают один экран. */
+@media (min-width:901px){
+  .hero{
+    height:calc(100vh - 71px);height:calc(100svh - 71px);
+    display:flex;flex-direction:column;overflow:hidden;
+    padding:clamp(18px,3.4vh,42px) 0 0;
+  }
+  .hero__in{flex:none;padding-bottom:clamp(18px,3vh,34px)}
+  .hero__img{width:min(1220px,100%);flex:1;min-height:90px}
+  .hero__img img{height:100%;aspect-ratio:auto}
+}
+
+@media (min-width:901px) and (max-height:760px){
+  .pill{margin-bottom:12px;padding-block:4px}
+  .subhead{margin-top:12px}
+  .hero__price{margin-top:18px}
+  .hero__price div{padding-top:10px}
+}
+
 /* --- форма-карточка --- */
 .qform{position:relative;background:var(--white);border:1px solid var(--line);border-top:5px solid var(--teal);border-radius:var(--r);padding:26px 24px 24px}
 .qform__t{font-size:21px;margin-bottom:6px}
@@ -271,6 +290,15 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
   .sticky-cta{display:block}
   .ftr{padding-bottom:86px}
   .qform{padding:20px 17px}
+}
+
+@media (min-width:901px) and (max-height:760px){
+  .qform{padding:16px 20px}
+  .qform__s{margin-bottom:10px}
+  .fld{margin-bottom:8px}
+  .fld input,.fld select{padding-block:9px}
+  .qform__note{margin-top:7px}
+  .hero__img{min-height:60px}
 }
 
 @media (prefers-reduced-motion:reduce){
