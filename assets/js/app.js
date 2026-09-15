@@ -1,14 +1,17 @@
 /* Портфолио — мобильное меню и сборка сообщения для мессенджеров.
    Данные формы никуда не отправляются: она собирает текст и открывает чат
-   с уже готовым сообщением. Сервер получает только анонимный код рекомендации. */
+   с готовым сообщением (для MAX — копирует текст для вставки).
+   Сервер получает только анонимный код рекомендации. */
 (function () {
   'use strict';
 
   var TG = 'skysx0207';
   var WA = '79324896700';
+  var MAX_CHAT = 'https://max.ru/u/f9LHodD0cOJ9oeFbKnXQnTrUYhTlNewUy-Ui5pFmW_MwNreb7rHAjkLRz-Y';
   var REFERRAL_ENDPOINT = 'https://portfolio-referrals.pages.dev/';
 
   function chatURL(messenger, text) {
+    if (messenger === 'max') return MAX_CHAT;
     var base = messenger === 'whatsapp' ? 'https://wa.me/' + WA : 'https://t.me/' + TG;
     return base + '?text=' + encodeURIComponent(text);
   }
@@ -261,6 +264,27 @@
   /* --- форма → выбранный мессенджер --- */
   var form = document.getElementById('contactForm');
   if (!form) return;
+  var maxMessage = document.getElementById('maxMessage');
+  var maxText = document.getElementById('max-text');
+  var maxCopyStatus = document.getElementById('maxCopyStatus');
+
+  function copyMaxText() {
+    function manualCopy() {
+      maxCopyStatus.textContent = 'Автоматическое копирование недоступно. Выделите текст выше и скопируйте его вручную, затем вставьте в чат MAX.';
+    }
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      manualCopy();
+      return;
+    }
+    maxCopyStatus.textContent = 'Подготовленный текст показан выше. Скопируйте его и вставьте в чат MAX.';
+    try {
+      navigator.clipboard.writeText(maxText.value).then(function () {
+        maxCopyStatus.textContent = 'Текст скопирован. Вставьте его в чат MAX и нажмите «Отправить».';
+      }, manualCopy);
+    } catch (_) { manualCopy(); }
+  }
+
+  document.getElementById('copyMaxMessage').addEventListener('click', copyMaxText);
 
   function setErr(name, msg) {
     var box = form.querySelector('[data-err="' + name + '"]');
@@ -293,7 +317,16 @@
                (task ? '\nЗадача: ' + task : '') +
                '\n\n(написал с сайта)';
 
-    var messenger = e.submitter && e.submitter.value === 'whatsapp' ? 'whatsapp' : 'telegram';
+    var messenger = e.submitter ? e.submitter.value : 'telegram';
+    if (messenger === 'max') {
+      maxText.value = text;
+      maxMessage.hidden = false;
+      /* Запускаем копирование в пользовательском клике, а чат открываем
+         синхронно: ожидание Clipboard API может включить блокировку окна. */
+      copyMaxText();
+    } else {
+      maxMessage.hidden = true;
+    }
     if (messenger === 'telegram') notifyReferral('form_opened_telegram');
     window.open(chatURL(messenger, text), '_blank', 'noopener');
   });

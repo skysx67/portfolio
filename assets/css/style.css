@@ -93,7 +93,6 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .nav{display:flex;gap:24px;margin-left:auto;font:400 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .nav a{text-decoration:none;color:var(--tx-mut);padding-bottom:3px;border-bottom:1px solid transparent}
 .nav a:hover{color:var(--ink);border-color:var(--wine)}
-.hdr__messengers{display:flex;align-items:center;gap:16px;flex:none}
 .hdr__tg{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--wine);border-bottom:1px solid var(--wine);padding-bottom:3px}
 .burger{display:none;width:44px;height:44px;border:1px solid var(--rule);background:none;cursor:pointer;position:relative;margin-left:auto}
 .burger span,.burger span::before,.burger span::after{position:absolute;left:12px;width:20px;height:1px;background:var(--ink);content:"";transition:.2s}
@@ -275,6 +274,7 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .form .btn{margin-top:8px}
 .form__actions{display:grid;gap:10px;margin-top:8px}
 .form__actions .btn{margin-top:0;min-height:48px;line-height:1.35}
+.form__copy{margin-top:20px;padding-top:20px;border-top:1px solid var(--rule-l)}
 .form__note{margin-top:14px;font-size:13px;text-align:center;color:rgba(244,241,234,.55)!important}
 
 /* --- футер --- */
@@ -306,7 +306,7 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
   .flow li > .flow__t{grid-area:3/2;text-align:left}
 }
 @media (max-width:900px){
-  .nav,.hdr__messengers{display:none}
+  .nav,.hdr__tg{display:none}
   .burger{display:block}
   .hero__in{grid-template-columns:1fr;align-items:start}
   .hero__meta dl{grid-template-columns:repeat(2,1fr);padding-bottom:0}
