@@ -1,11 +1,17 @@
-/* Портфолио — мобильное меню и сборка сообщения в Telegram.
+/* Портфолио — мобильное меню и сборка сообщения для мессенджеров.
    Данные формы никуда не отправляются: она собирает текст и открывает чат
    с уже готовым сообщением. Сервер получает только анонимный код рекомендации. */
 (function () {
   'use strict';
 
   var TG = 'skysx0207';
+  var WA = '79324896700';
   var REFERRAL_ENDPOINT = 'https://portfolio-referrals.pages.dev/';
+
+  function chatURL(messenger, text) {
+    var base = messenger === 'whatsapp' ? 'https://wa.me/' + WA : 'https://t.me/' + TG;
+    return base + '?text=' + encodeURIComponent(text);
+  }
 
   /* --- рекомендации друзей / UTM ---
      Клиент не видит ни имени рекомендателя, ни служебного кода. Сервер получает
@@ -24,17 +30,18 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ event: event, ref: referralCode, page: location.pathname })
     }).catch(function () {
-      /* Уведомление не должно мешать человеку открыть Telegram. */
+      /* Уведомление не должно мешать человеку открыть чат. */
     });
   }
 
-  if (referralCode) {
-    var directText = 'Здравствуйте! Хочу обсудить сайт.';
-    Array.prototype.forEach.call(document.querySelectorAll('a[href^="https://t.me/' + TG + '"]'), function (link) {
-      link.href = 'https://t.me/' + TG + '?text=' + encodeURIComponent(directText);
+  var directText = 'Здравствуйте! Хочу обсудить сайт.';
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="https://t.me/' + TG + '"], a[href^="https://wa.me/' + WA + '"]'), function (link) {
+    var messenger = link.href.indexOf('https://wa.me/') === 0 ? 'whatsapp' : 'telegram';
+    link.href = chatURL(messenger, directText);
+    if (referralCode && messenger === 'telegram') {
       link.addEventListener('click', function () { notifyReferral('telegram_click'); });
-    });
-  }
+    }
+  });
 
   /* --- проявление блоков при прокрутке ---
      Стартовые состояния включает класс rv-on, он ставится крошечным скриптом
@@ -251,7 +258,7 @@
     });
   }
 
-  /* --- форма → ссылка в Telegram --- */
+  /* --- форма → выбранный мессенджер --- */
   var form = document.getElementById('contactForm');
   if (!form) return;
 
@@ -286,7 +293,8 @@
                (task ? '\nЗадача: ' + task : '') +
                '\n\n(написал с сайта)';
 
-    notifyReferral('form_opened_telegram');
-    window.open('https://t.me/' + TG + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    var messenger = e.submitter && e.submitter.value === 'whatsapp' ? 'whatsapp' : 'telegram';
+    if (messenger === 'telegram') notifyReferral('form_opened_telegram');
+    window.open(chatURL(messenger, text), '_blank', 'noopener');
   });
 })();

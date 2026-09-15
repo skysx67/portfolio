@@ -93,6 +93,7 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .nav{display:flex;gap:24px;margin-left:auto;font:400 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .nav a{text-decoration:none;color:var(--tx-mut);padding-bottom:3px;border-bottom:1px solid transparent}
 .nav a:hover{color:var(--ink);border-color:var(--wine)}
+.hdr__messengers{display:flex;align-items:center;gap:16px;flex:none}
 .hdr__tg{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--wine);border-bottom:1px solid var(--wine);padding-bottom:3px}
 .burger{display:none;width:44px;height:44px;border:1px solid var(--rule);background:none;cursor:pointer;position:relative;margin-left:auto}
 .burger span,.burger span::before,.burger span::after{position:absolute;left:12px;width:20px;height:1px;background:var(--ink);content:"";transition:.2s}
@@ -251,7 +252,7 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .contact__text h2{margin-bottom:22px}
 .contact__links{list-style:none;margin:36px 0 0;padding:0;border-top:1px solid var(--rule-l)}
 .contact__links li{border-bottom:1px solid var(--rule-l)}
-.contact__links a{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:20px 0;text-decoration:none;transition:padding-left .22s}
+.contact__links a{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;padding:20px 0;text-decoration:none;transition:padding-left .22s}
 .contact__links a:hover{padding-left:10px}
 .contact__links span{font:400 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(244,241,234,.6)}
 .contact__links b{font-family:var(--display);font-weight:400;font-size:clamp(23px,2.6vw,34px);color:var(--paper)}
@@ -272,6 +273,8 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
 .err.on{display:block}
 [aria-invalid="true"]{border-color:#F0A5AE!important}
 .form .btn{margin-top:8px}
+.form__actions{display:grid;gap:10px;margin-top:8px}
+.form__actions .btn{margin-top:0;min-height:48px;line-height:1.35}
 .form__note{margin-top:14px;font-size:13px;text-align:center;color:rgba(244,241,234,.55)!important}
 
 /* --- футер --- */
@@ -303,7 +306,7 @@ s{color:var(--tx-faint);text-decoration-thickness:1px}
   .flow li > .flow__t{grid-area:3/2;text-align:left}
 }
 @media (max-width:900px){
-  .nav,.hdr__tg{display:none}
+  .nav,.hdr__messengers{display:none}
   .burger{display:block}
   .hero__in{grid-template-columns:1fr;align-items:start}
   .hero__meta dl{grid-template-columns:repeat(2,1fr);padding-bottom:0}

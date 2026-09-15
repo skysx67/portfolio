@@ -86,7 +86,10 @@
       <a href="#about">Обо мне</a>
       <a href="#contact">Контакты</a>
     </nav>
-    <a class="hdr__tg" href="https://t.me/skysx0207" target="_blank" rel="noopener">Telegram</a>
+    <div class="hdr__messengers" aria-label="Написать мне">
+      <a class="hdr__tg" href="https://t.me/skysx0207" target="_blank" rel="noopener">Telegram</a>
+      <a class="hdr__tg" href="https://wa.me/79324896700" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
     <button class="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="mnav">
       <span></span>
     </button>
@@ -94,6 +97,7 @@
   <nav class="mnav" id="mnav" hidden aria-label="Мобильная навигация">
     <a href="#cases">Работы</a><a href="#services">Цены</a><a href="#about">Обо мне</a><a href="#contact">Контакты</a>
     <a href="https://t.me/skysx0207" target="_blank" rel="noopener">Telegram · @skysx0207</a>
+    <a href="https://wa.me/79324896700" target="_blank" rel="noopener">WhatsApp · +7 932 489-67-00</a>
   </nav>
 </header>
 
@@ -119,6 +123,7 @@
     <p class="hero__cta" data-rv="up" style="--rv-i:1">
       <a class="btn" href="#cases">Смотреть работы</a>
       <a class="ulink" href="https://t.me/skysx0207" target="_blank" rel="noopener">Написать в Telegram</a>
+      <a class="ulink" href="https://wa.me/79324896700" target="_blank" rel="noopener">Написать в WhatsApp</a>
     </p>
   </div>
 </section>
@@ -465,13 +470,14 @@
       <p>Расскажите в двух словах, что за бизнес и что хотите от сайта. Отвечу, сколько это будет стоить и сколько займёт, без «нужно созвониться, чтобы понять».</p>
       <ul class="contact__links">
         <li><a href="https://t.me/skysx0207" target="_blank" rel="noopener"><span>Telegram</span><b>@skysx0207</b></a></li>
+        <li><a href="https://wa.me/79324896700" target="_blank" rel="noopener"><span>WhatsApp</span><b>+7 932 489-67-00</b></a></li>
         <li><a href="tel:+79324896700"><span>Телефон</span><b>+7 932 489-67-00</b></a></li>
       </ul>
       <p class="contact__note">Обычно отвечаю в течение пары часов, вечером — быстрее.</p>
     </div>
 
     <form class="form" id="contactForm" data-rv="up" style="--rv-i:1" novalidate>
-      <p class="form__lead">Не хотите писать сами — заполните, и я соберу сообщение за вас. Кнопка откроет Telegram с готовым текстом, останется нажать «отправить».</p>
+      <p class="form__lead">Заполните пару полей — я соберу сообщение за вас. Выберите Telegram или WhatsApp: чат откроется с готовым текстом.</p>
       <div class="fld">
         <label for="f-name">Как вас зовут</label>
         <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -486,8 +492,11 @@
         <label for="f-task">Что нужно</label>
         <textarea id="f-task" name="task" rows="3" placeholder="Сайта нет, клиенты приходят из 2ГИС. Нужна страница с примерами работ и формой."></textarea>
       </div>
-      <button class="btn btn--wide" type="submit">Открыть Telegram с этим текстом</button>
-      <p class="form__note">Ничего никуда не отправляется до того, как вы сами нажмёте «отправить» в Telegram.</p>
+      <div class="form__actions" role="group" aria-label="Открыть чат с готовым сообщением">
+        <button class="btn btn--wide" type="submit" name="messenger" value="telegram">Открыть Telegram</button>
+        <button class="btn btn--wide" type="submit" name="messenger" value="whatsapp">Открыть WhatsApp</button>
+      </div>
+      <p class="form__note">Сообщение отправится, только когда вы сами нажмёте «Отправить» в выбранном мессенджере.</p>
       <p class="form__note">Обращение не обязывает покупать услугу.</p>
     </form>
   </div>
