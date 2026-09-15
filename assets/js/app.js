@@ -60,13 +60,12 @@
       root.classList.remove('rv-on');
       return;
     }
-    root.dataset.rvReady = '1';
 
     Array.prototype.forEach.call(document.querySelectorAll('[data-rv-stagger]'), function (group) {
       var i = 0;
       Array.prototype.forEach.call(group.children, function (child) {
         var t = child.matches('[data-rv]') ? child : child.querySelector('[data-rv]');
-        if (t) t.style.setProperty('--rv-i', i++);
+        if (t) t.style.setProperty('--rv-i', Math.min(i++, 3));
       });
     });
 
@@ -84,14 +83,46 @@
         io.unobserve(en.target);
         delete en.target.__rv;
       });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
+    }, { rootMargin: '0px 0px 100px 0px', threshold: 0 });
 
     Array.prototype.forEach.call(els, function (e) {
       var host = (clipped[e.dataset.rv] && e.parentElement) ? e.parentElement : e;
+      // Наблюдаемый узел не должен находиться внутри закрытой reveal-маски.
+      for (var parent = host; parent; parent = parent.parentElement) {
+        if (clipped[parent.dataset.rv] && parent.parentElement) host = parent.parentElement;
+      }
       if (!host.__rv) { host.__rv = []; watched.push(host); }
       host.__rv.push(e);
     });
     watched.forEach(function (h) { io.observe(h); });
+
+    function revealHash(hash) {
+      var target;
+      try { target = document.getElementById(decodeURIComponent(hash.slice(1))); }
+      catch (_) { return; }
+      if (!target) return;
+      // Включая вложенные заголовки и картинки: без ожидания IO и задержек CSS.
+      target.classList.add('rv-direct');
+      Array.prototype.forEach.call(target.querySelectorAll('[data-rv]'), function (e) {
+        e.classList.add('rv-in');
+      });
+      for (var parent = target; parent; parent = parent.parentElement) {
+        if (parent.hasAttribute('data-rv')) parent.classList.add('rv-in', 'rv-direct');
+      }
+    }
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest('a[href^="#"]');
+      if (link) revealHash(link.hash);
+    });
+    addEventListener('hashchange', function () { revealHash(location.hash); });
+    revealHash(location.hash);
+
+    // Первое окно видно даже при отложенном callback наблюдателя.
+    Array.prototype.forEach.call(els, function (e) {
+      var rect = e.getBoundingClientRect();
+      if (rect.bottom >= 0 && rect.top <= innerHeight) e.classList.add('rv-in');
+    });
+    root.dataset.rvReady = '1';
 
     /* Подвал стоит у самого низа страницы и в порог наблюдателя не попадает —
        докручены до конца, значит показываем всё, что осталось. */
@@ -330,5 +361,9 @@
     }
     notifyReferral('form_opened_' + messenger);
     window.open(chatURL(messenger, text), '_blank', 'noopener');
+  });
+  // В HTML кнопки выключены, чтобы без JS форма не отправляла поля в URL.
+  form.querySelectorAll('button[type="submit"]').forEach(function (button) {
+    button.disabled = false;
   });
 })();
