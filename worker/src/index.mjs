@@ -12,8 +12,12 @@ const REFERRALS = Object.freeze({
 });
 
 const EVENTS = Object.freeze({
-  telegram_click: 'нажал «Написать в Telegram»',
-  form_opened_telegram: 'заполнил форму и открыл Telegram'
+  telegram_click: 'нажал ссылку Telegram',
+  whatsapp_click: 'нажал ссылку WhatsApp',
+  max_click: 'нажал ссылку MAX',
+  form_opened_telegram: 'заполнил форму и нажал «Открыть Telegram»',
+  form_opened_whatsapp: 'заполнил форму и нажал «Открыть WhatsApp»',
+  form_opened_max: 'заполнил форму и нажал «Открыть MAX»'
 });
 
 function cors(origin) {
@@ -67,7 +71,7 @@ export default {
 
     const ref = clean(body.ref, 3).toUpperCase();
     const event = clean(body.event, 40);
-    if (!REFERRALS[ref] || !EVENTS[event]) {
+    if (!Object.hasOwn(REFERRALS, ref) || !Object.hasOwn(EVENTS, event)) {
       return json({ ok: false, error: 'invalid_event' }, 400, origin);
     }
 

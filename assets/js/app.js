@@ -38,11 +38,12 @@
   }
 
   var directText = 'Здравствуйте! Хочу обсудить сайт.';
-  Array.prototype.forEach.call(document.querySelectorAll('a[href^="https://t.me/' + TG + '"], a[href^="https://wa.me/' + WA + '"]'), function (link) {
-    var messenger = link.href.indexOf('https://wa.me/') === 0 ? 'whatsapp' : 'telegram';
-    link.href = chatURL(messenger, directText);
-    if (referralCode && messenger === 'telegram') {
-      link.addEventListener('click', function () { notifyReferral('telegram_click'); });
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="https://t.me/' + TG + '"], a[href^="https://wa.me/' + WA + '"], a[href="' + MAX_CHAT + '"]'), function (link) {
+    var messenger = link.href.indexOf('https://wa.me/') === 0 ? 'whatsapp' :
+                    link.href === MAX_CHAT ? 'max' : 'telegram';
+    if (messenger !== 'max') link.href = chatURL(messenger, directText);
+    if (referralCode) {
+      link.addEventListener('click', function () { notifyReferral(messenger + '_click'); });
     }
   });
 
@@ -327,7 +328,7 @@
     } else {
       maxMessage.hidden = true;
     }
-    if (messenger === 'telegram') notifyReferral('form_opened_telegram');
+    notifyReferral('form_opened_' + messenger);
     window.open(chatURL(messenger, text), '_blank', 'noopener');
   });
 })();
