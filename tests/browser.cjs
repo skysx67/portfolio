@@ -132,14 +132,14 @@ async function visibleSection(page, id) {
     assert.ok(contacts.some(h => new URL(h).pathname === '/skysx0207'));
     assert.ok(contacts.some(h => new URL(h).pathname === '/79324896700'));
     assert.ok(contacts.some(h => h.includes('/u/f9LHodD0cOJ9oeFbKnXQnTrUYhTlNewUy-Ui5pFmW_MwNreb7rHAjkLRz-Y')));
-    assert.deepEqual(await page.locator('.case[data-view]').evaluateAll(els => els.map(e => e.dataset.view)), ['https://skysx67.github.io/perfecto-mebel/', 'demo/remont/', 'demo/potolki/', 'demo/design/']);
+    assert.deepEqual(await page.locator('.case[data-view]').evaluateAll(els => els.map(e => e.dataset.view)), ['https://skysx67.github.io/perfecto-mebel/', 'https://skysx67.github.io/alina-inkline/', 'demo/remont/', 'demo/potolki/', 'demo/design/']);
     await page.locator('[data-view-open]').first().click();
-    assert.equal(await page.locator('#vCount').innerText(), '1 / 4');
+    assert.equal(await page.locator('#vCount').innerText(), '1 / 5');
     await page.locator('#vNext').click();
-    assert.equal(await page.locator('#vCount').innerText(), '2 / 4');
+    assert.equal(await page.locator('#vCount').innerText(), '2 / 5');
     await page.keyboard.press('Escape');
     assert.ok(await page.locator('#viewer').isHidden());
-    results.push('Генератор: валидация, Telegram/WhatsApp/MAX, кодирование, буфер и отказ буфера; ссылки, 4 работы и просмотрщик — OK');
+    results.push('Генератор: валидация, Telegram/WhatsApp/MAX, кодирование, буфер и отказ буфера; ссылки, 5 работ и просмотрщик — OK');
 
     const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
     assert.deepEqual(schema.makesOffer.map(o => o.price), ['15000', '24000', '35000']);

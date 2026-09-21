@@ -117,6 +117,24 @@
     addEventListener('hashchange', function () { revealHash(location.hash); });
     revealHash(location.hash);
 
+    /* При прямом входе по hash браузер прокручивает страницу до загрузки
+       локальных шрифтов. После смены метрик длинная страница может остаться
+       на несколько пикселей ниже секции, поэтому один раз выравниваем якорь. */
+    var initialHash = location.hash;
+    if (initialHash && document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        if (location.hash !== initialHash) return;
+        var target;
+        try { target = document.getElementById(decodeURIComponent(initialHash.slice(1))); }
+        catch (_) { return; }
+        if (!target) return;
+        requestAnimationFrame(function () {
+          var margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+          scrollTo({ top: target.getBoundingClientRect().top + scrollY - margin, behavior: 'instant' });
+        });
+      }).catch(function () {});
+    }
+
     // Первое окно видно даже при отложенном callback наблюдателя.
     Array.prototype.forEach.call(els, function (e) {
       var rect = e.getBoundingClientRect();

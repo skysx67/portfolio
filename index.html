@@ -152,8 +152,8 @@
 <section class="sec" id="cases">
   <div class="wrap">
     <header class="shead">
-      <h2 data-rv="mask">Четыре сайта</h2>
-      <p data-rv="up" style="--rv-i:1">Perfecto — реальный проект мебельной студии, сейчас в разработке. «Ровно», «Потолок 72» и «Северова» — демо вымышленных компаний: полноценные демонстрации разных задач и визуальных направлений, с работающими формами, калькулятором и квизом.</p>
+      <h2 data-rv="mask">Пять сайтов</h2>
+      <p data-rv="up" style="--rv-i:1">Perfecto — реальный проект мебельной студии, сейчас в разработке. Alina Inkline — экспериментальный концепт портфолио тату-мастера. «Ровно», «Потолок 72» и «Северова» — демо вымышленных компаний: полноценные демонстрации разных задач и визуальных направлений, с работающими формами, калькулятором и квизом.</p>
     </header>
 
     <ol class="cases">
@@ -184,8 +184,32 @@
         </figure>
       </li>
 
-      <li class="case case--flip" data-rv="row" data-rv-stagger data-view="demo/remont/" data-view-title="Ровно" data-view-url="demo/remont">
+      <li class="case case--flip" data-rv="row" data-rv-stagger data-view="https://skysx67.github.io/alina-inkline/" data-view-title="Alina Inkline" data-view-url="skysx67.github.io/alina-inkline">
         <span class="case__num" data-rv="fig" aria-hidden="true">02</span>
+        <div class="case__body" data-rv="up">
+          <p class="case__niche">Тату-мастер · экспериментальный концепт</p>
+          <h3>Alina Inkline</h3>
+          <p class="case__desc">Сайт-портфолио для личного бренда тату-мастера из Тюмени. Вместо обычной сетки эскизов — живой editorial: крупная типографика, контрастные фотографии и путь от первого впечатления до записи.</p>
+          <ul class="case__list">
+            <li>Горизонтальный архив работ с полноэкранным просмотром</li>
+            <li>Плавная прокрутка и постановочная scroll-анимация</li>
+            <li>WebGL-переход с облегчённым CSS-режимом</li>
+            <li>Процесс работы, FAQ и форма записи</li>
+            <li>Адаптив, доступная навигация и reduced motion</li>
+          </ul>
+          <p class="case__go"><button class="btn btn--sm" type="button" data-view-open>Пролистать здесь</button><a class="ulink" href="https://skysx67.github.io/alina-inkline/" target="_blank" rel="noopener">Открыть в новой вкладке</a></p>
+        </div>
+        <figure class="case__shot" data-rv="img">
+          <a href="https://skysx67.github.io/alina-inkline/" target="_blank" rel="noopener"><img src="assets/img/case-alina-inkline-1200.webp"
+                 srcset="assets/img/case-alina-inkline-600.webp 600w, assets/img/case-alina-inkline-900.webp 900w, assets/img/case-alina-inkline-1200.webp 1200w, assets/img/case-alina-inkline-1600.webp 1600w"
+                 sizes="(max-width:660px) calc(100vw - 44px), (max-width:1100px) 88vw, (max-width:1324px) 45vw, 575px"
+                 alt="Первый экран концепта сайта тату-мастера Alina Inkline с крупной красной типографикой и чёрно-белым портретом" width="1200" height="800" loading="lazy"></a>
+          <figcaption>skysx67.github.io/alina-inkline</figcaption>
+        </figure>
+      </li>
+
+      <li class="case" data-rv="row" data-rv-stagger data-view="demo/remont/" data-view-title="Ровно" data-view-url="demo/remont">
+        <span class="case__num" data-rv="fig" aria-hidden="true">03</span>
         <div class="case__body" data-rv="up">
           <p class="case__niche">Ремонт квартир под ключ · демо</p>
           <h3>Ровно</h3>
@@ -207,8 +231,8 @@
         </figure>
       </li>
 
-      <li class="case" data-rv="row" data-rv-stagger data-view="demo/potolki/" data-view-title="Потолок 72" data-view-url="demo/potolki">
-        <span class="case__num" data-rv="fig" aria-hidden="true">03</span>
+      <li class="case case--flip" data-rv="row" data-rv-stagger data-view="demo/potolki/" data-view-title="Потолок 72" data-view-url="demo/potolki">
+        <span class="case__num" data-rv="fig" aria-hidden="true">04</span>
         <div class="case__body" data-rv="up">
           <p class="case__niche">Натяжные потолки · демо</p>
           <h3>Потолок&#8202;72</h3>
@@ -230,8 +254,8 @@
         </figure>
       </li>
 
-      <li class="case case--flip" data-rv="row" data-rv-stagger data-view="demo/design/" data-view-title="Северова" data-view-url="demo/design">
-        <span class="case__num" data-rv="fig" aria-hidden="true">04</span>
+      <li class="case" data-rv="row" data-rv-stagger data-view="demo/design/" data-view-title="Северова" data-view-url="demo/design">
+        <span class="case__num" data-rv="fig" aria-hidden="true">05</span>
         <div class="case__body" data-rv="up">
           <p class="case__niche">Дизайн интерьера · демо</p>
           <h3>Северова</h3>
@@ -549,7 +573,7 @@
         <button class="viewer__arrow" type="button" id="vPrev" aria-label="Предыдущая работа">
           <svg width="17" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true"><path d="M6 1 1 6l5 5M1 6h15" stroke="currentColor" stroke-width="1.4"/></svg>
         </button>
-        <span class="viewer__count" id="vCount" aria-live="polite">1 / 4</span>
+        <span class="viewer__count" id="vCount" aria-live="polite">1 / 5</span>
         <button class="viewer__arrow" type="button" id="vNext" aria-label="Следующая работа">
           <svg width="17" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true"><path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.4"/></svg>
         </button>

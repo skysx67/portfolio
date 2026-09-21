@@ -10,6 +10,12 @@
 Портрет Максима Вагина в блоке «Обо мне» предоставлен им для портфолио
 (`assets/img/maxim-portrait-*.webp`).
 
+Превью `assets/img/case-alina-inkline-*.webp` сняты с опубликованного
+концепта [Alina Inkline](https://skysx67.github.io/alina-inkline/). Подробное
+происхождение временных и сгенерированных визуалов задокументировано в
+[ASSET_CREDITS.md](https://github.com/skysx67/alina-inkline/blob/main/ASSET_CREDITS.md)
+репозитория этого проекта.
+
 Отдельно требует указания авторства:
 
 | Файл | Автор | Лицензия | Источник |
