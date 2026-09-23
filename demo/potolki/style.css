@@ -96,38 +96,24 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 
 /* --- hero --- */
 .hero{position:relative;padding:clamp(34px,4.4vw,60px) 0 0;background:var(--cream)}
-.hero__in{display:grid;grid-template-columns:1fr 396px;gap:clamp(26px,4vw,54px);align-items:start;padding-bottom:clamp(34px,4.4vw,56px)}
+.hero__in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3.2vw,40px);align-items:center}
+.hero h1{font-size:clamp(31px,4vw,50px)}
+.hero h1 .blue{display:block}
 .pill{
   display:inline-block;border:1px solid var(--teal);color:var(--teal);border-radius:100px;
   padding:6px 15px;font-size:13px;font-weight:500;margin-bottom:20px;
 }
 .subhead{margin-top:18px;font-size:clamp(16.5px,1.35vw,19px);color:var(--tx-mut);max-width:30em}
-.hero__price{display:flex;gap:0;flex-wrap:wrap;margin-top:30px;border-top:2px solid var(--ink)}
-.hero__price div{display:flex;flex-direction:column;gap:1px;padding:16px 22px 0 0;flex:1;min-width:150px}
-.hero__price div + div{border-left:1px solid var(--line);padding-left:22px}
-.hero__price b{font-family:var(--head);font-weight:700;font-size:clamp(21px,2.1vw,27px);letter-spacing:-.035em;color:var(--teal);font-variant-numeric:tabular-nums}
+.hero__price{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:30px;border-top:2px solid var(--ink)}
+.hero__price div{display:flex;flex-direction:column;gap:4px;padding:16px 12px 0 0}
+.hero__price div + div{border-left:1px solid var(--line);padding-left:12px}
+.hero__price b{font-family:var(--head);font-weight:700;font-size:clamp(18px,1.9vw,25px);letter-spacing:-.035em;color:var(--teal);font-variant-numeric:tabular-nums;white-space:nowrap}
 .hero__price span{font-size:13px;color:var(--tx-mut);line-height:1.3;max-width:15em}
-.hero__img{max-width:1220px;margin:0 auto;padding:0 20px}
-.hero__img img{width:100%;aspect-ratio:24/9;object-fit:cover;object-position:50% 28%;border-radius:var(--r) var(--r) 0 0;border:1px solid var(--line);border-bottom:0}
-
-/* После демо-плашки шапка и hero вместе занимают один экран. */
-@media (min-width:901px){
-  .hero{
-    height:calc(100vh - 71px);height:calc(100svh - 71px);
-    display:flex;flex-direction:column;overflow:hidden;
-    padding:clamp(18px,3.4vh,42px) 0 0;
-  }
-  .hero__in{flex:none;padding-bottom:clamp(18px,3vh,34px)}
-  .hero__img{width:min(1220px,100%);flex:1;min-height:90px}
-  .hero__img img{height:100%;aspect-ratio:auto}
-}
-
-@media (min-width:901px) and (max-height:760px){
-  .pill{margin-bottom:12px;padding-block:4px}
-  .subhead{margin-top:12px}
-  .hero__price{margin-top:18px}
-  .hero__price div{padding-top:10px}
-}
+/* Фото сохраняет весь кадр; высота hero определяется содержимым. */
+.hero__img{margin:0;min-width:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--cream-2)}
+.hero__img img{width:100%;height:auto}
+.hero__img figcaption{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0 16px;padding:6px 16px;font-size:13px;color:var(--tx-mut)}
+.hero__img figcaption a{display:inline-flex;align-items:center;min-height:44px;color:var(--teal);font-weight:500;text-underline-offset:4px}
 
 /* --- форма-карточка --- */
 .qform{position:relative;background:var(--white);border:1px solid var(--line);border-top:5px solid var(--teal);border-radius:var(--r);padding:26px 24px 24px}
@@ -152,6 +138,15 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 .qform__ok b{font-family:var(--head);font-weight:700;font-size:19px;letter-spacing:-.02em}
 .qform__ok p{color:var(--tx-mut);font-size:15px}
 .qform__ok i{font-style:normal;font-weight:600;color:var(--tx);white-space:nowrap}
+
+.qform--quick{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:14px 18px;align-items:start}
+.qform__head{grid-column:1/-1;display:flex;align-items:baseline;gap:24px}
+.qform__head .qform__t{flex:none;margin:0}
+.qform__head .qform__s{margin:0;max-width:38em}
+.qform--quick .fld{margin:0}
+.qform--quick .err{margin:6px 0 0}
+.qform--quick > .btn{margin-top:26px;min-height:50px}
+.qform--quick .qform__note{grid-column:1/-1;margin:0;text-align:right}
 
 /* --- плитки преимуществ --- */
 .tiles{padding:clamp(40px,5vw,68px) 0 0}
@@ -260,7 +255,6 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 
 /* --- адаптив --- */
 @media (max-width:1080px){
-  .hero__in{grid-template-columns:1fr 350px}
   .price,.rooms{grid-template-columns:repeat(2,1fr)}
   .tiles__in{grid-template-columns:repeat(2,1fr)}
   .tile:nth-child(3){border-left:0;padding-left:0}
@@ -271,6 +265,9 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
   .nav,.hdr .tel,.hdr .btn{display:none}
   .burger{display:block}
   .hero__in,.how,.two,.cta__in{grid-template-columns:1fr}
+  .qform--quick{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .qform__head{display:block}
+  .qform__head .qform__t{margin-bottom:6px}
   .gal{grid-template-columns:repeat(2,1fr)}
   .gal__i--big{grid-column:span 2;grid-row:auto}
   .gal__i--big img{aspect-ratio:2/1}
@@ -284,21 +281,15 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
   .tile + .tile{border-top:1px solid var(--line);padding-top:20px;margin-top:0}
   .gal__i--big{grid-column:auto}
   .gal__i--big img{aspect-ratio:3/2}
-  .hero__price div,.hero__price div + div{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:14px}
-  .hero__price div:first-child{border-top:0}
-  .hero__img img{aspect-ratio:16/9}
+  .hero__price{grid-template-columns:1fr 1fr}
+  .hero__price div{padding-top:14px}
+  .hero__price div:nth-child(3){grid-column:1/-1;border-left:0;border-top:1px solid var(--line);margin-top:14px;padding-left:0}
+  .qform--quick{grid-template-columns:1fr}
+  .qform--quick > .btn{margin-top:0}
+  .qform--quick .qform__note{text-align:center}
   .sticky-cta{display:block}
   .ftr{padding-bottom:86px}
   .qform{padding:20px 17px}
-}
-
-@media (min-width:901px) and (max-height:760px){
-  .qform{padding:16px 20px}
-  .qform__s{margin-bottom:10px}
-  .fld{margin-bottom:8px}
-  .fld input,.fld select{padding-block:9px}
-  .qform__note{margin-top:7px}
-  .hero__img{min-height:60px}
 }
 
 @media (prefers-reduced-motion:reduce){

@@ -14,7 +14,7 @@
 <link rel="preload" as="font" type="font/woff2" href="fonts/unbounded-800-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/unbounded-700-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/onest-400-cyrillic.woff2" crossorigin>
-<link rel="preload" as="image" href="img/hero-1400.webp" imagesrcset="img/hero-640.webp 640w, img/hero-820.webp 820w, img/hero-1000.webp 1000w, img/hero-1400.webp 1400w, img/hero-1900.webp 1900w, img/hero-2440.webp 2440w" imagesizes="(max-width:1220px) calc(100vw - 40px), 1180px" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-1400.webp" imagesrcset="img/hero-640.webp 640w, img/hero-820.webp 820w, img/hero-1000.webp 1000w, img/hero-1400.webp 1400w, img/hero-1900.webp 1900w, img/hero-2440.webp 2440w" imagesizes="(max-width:900px) calc(100vw - 40px), (max-width:1260px) calc((100vw - 80px) / 2), 590px" fetchpriority="high">
 <script>
 /* Стартовые состояния анимаций ставим до первой отрисовки. Если скрипт сайта
    не доедет — через 1,2 с после загрузки показываем всё принудительно. */
@@ -70,19 +70,30 @@
       </div>
     </div>
 
-    <form class="qform" id="quickForm" novalidate>
-      <h2 class="qform__t">Бесплатный замер</h2>
-      <p class="qform__s">Замерщик приедет в удобное время и назовёт точную цену на месте.</p>
-      <label class="fld">
-        <span>Ваше имя</span>
-        <input type="text" name="name" placeholder="Имя" autocomplete="name" required>
-      </label>
-      <span class="err" data-err="name"></span>
-      <label class="fld">
-        <span>Телефон</span>
-        <input type="tel" name="phone" inputmode="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
-      </label>
-      <span class="err" data-err="phone"></span>
+    <figure class="hero__img">
+      <img src="img/hero-1400.webp" srcset="img/hero-640.webp 640w, img/hero-820.webp 820w, img/hero-1000.webp 1000w, img/hero-1400.webp 1400w, img/hero-1900.webp 1900w, img/hero-2440.webp 2440w" sizes="(max-width:900px) calc(100vw - 40px), (max-width:1260px) calc((100vw - 80px) / 2), 590px" alt="Светлая гостиная с ровным белым потолком, панорамными окнами и деревянной лестницей" width="1400" height="788" fetchpriority="high">
+      <figcaption><span>Светлый потолок в интерьере</span><a href="#gallery">Больше примеров →</a></figcaption>
+    </figure>
+
+    <form class="qform qform--quick" id="quickForm" novalidate>
+      <div class="qform__head">
+        <h2 class="qform__t">Бесплатный замер</h2>
+        <p class="qform__s">Замерщик приедет в удобное время и назовёт точную цену на месте.</p>
+      </div>
+      <div class="qform__field">
+        <label class="fld">
+          <span>Ваше имя</span>
+          <input type="text" name="name" placeholder="Имя" autocomplete="name" required>
+        </label>
+        <span class="err" data-err="name"></span>
+      </div>
+      <div class="qform__field">
+        <label class="fld">
+          <span>Телефон</span>
+          <input type="tel" name="phone" inputmode="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
+        </label>
+        <span class="err" data-err="phone"></span>
+      </div>
       <label class="fld">
         <span>Когда удобно</span>
         <select name="when">
@@ -102,7 +113,6 @@
       </div>
     </form>
   </div>
-  <div class="hero__img" data-rv="img"><img src="img/hero-1400.webp" srcset="img/hero-640.webp 640w, img/hero-820.webp 820w, img/hero-1000.webp 1000w, img/hero-1400.webp 1400w, img/hero-1900.webp 1900w, img/hero-2440.webp 2440w" sizes="(max-width:1220px) calc(100vw - 40px), 1180px" alt="Просторная светлая гостиная с ровным белым натяжным потолком и встроенными светильниками" width="1400" height="788" fetchpriority="high"></div>
 </section>
 
 <!-- ПРЕИМУЩЕСТВА -->
