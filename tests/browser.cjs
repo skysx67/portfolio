@@ -177,7 +177,9 @@ async function visibleSection(page, id) {
     await page.locator('#leadForm button[type="submit"]').click();
     assert.ok(await page.locator('#formOk').isVisible());
     await page.goto(base + '/demo/potolki/');
-    assert.equal(await page.locator('form.qform').count(), 2);
+    assert.equal(await page.locator('form.qform').count(), 1);
+    assert.ok(await page.locator('.hero__actions a[href="#form"]').isVisible());
+    assert.ok(await page.locator('.hero__img img').evaluate(img => img.complete && img.naturalWidth > 0));
     for (const form of await page.locator('form.qform').all()) {
       await form.locator('[name="name"]').fill('Тест');
       await form.locator('[name="phone"]').fill('79990000000');

@@ -95,8 +95,10 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 .mnav a{padding:13px 0;text-decoration:none;border-bottom:1px solid var(--line);font-weight:500}
 
 /* --- hero --- */
-.hero{position:relative;padding:clamp(34px,4.4vw,60px) 0 0;background:var(--cream)}
-.hero__in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3.2vw,40px);align-items:center}
+.hero{position:relative;min-height:calc(100svh - 116px);display:grid;align-items:center;padding:clamp(32px,5vh,64px) 0;background:var(--cream)}
+.hero__in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto;gap:24px clamp(24px,3.2vw,40px);align-items:center}
+.hero__text{grid-column:1;align-self:end}
+.hero__offer{grid-column:1;align-self:start}
 .hero h1{font-size:clamp(31px,4vw,50px)}
 .hero h1 .blue{display:block}
 .pill{
@@ -104,16 +106,18 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
   padding:6px 15px;font-size:13px;font-weight:500;margin-bottom:20px;
 }
 .subhead{margin-top:18px;font-size:clamp(16.5px,1.35vw,19px);color:var(--tx-mut);max-width:30em}
-.hero__price{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:30px;border-top:2px solid var(--ink)}
+.hero__price{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
 .hero__price div{display:flex;flex-direction:column;gap:4px;padding:16px 12px 0 0}
 .hero__price div + div{border-left:1px solid var(--line);padding-left:12px}
 .hero__price b{font-family:var(--head);font-weight:700;font-size:clamp(18px,1.9vw,25px);letter-spacing:-.035em;color:var(--teal);font-variant-numeric:tabular-nums;white-space:nowrap}
 .hero__price span{font-size:13px;color:var(--tx-mut);line-height:1.3;max-width:15em}
-/* Фото сохраняет весь кадр; высота hero определяется содержимым. */
-.hero__img{margin:0;min-width:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--cream-2)}
+/* Фото сохраняет весь кадр и показывает именно потолок. */
+.hero__img{grid-column:2;grid-row:1/3;margin:0;min-width:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--cream-2)}
 .hero__img img{width:100%;height:auto}
 .hero__img figcaption{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0 16px;padding:6px 16px;font-size:13px;color:var(--tx-mut)}
 .hero__img figcaption a{display:inline-flex;align-items:center;min-height:44px;color:var(--teal);font-weight:500;text-underline-offset:4px}
+.hero__actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px;margin-top:32px}
+.hero__link{color:var(--teal);font-weight:500;text-underline-offset:4px}
 
 /* --- форма-карточка --- */
 .qform{position:relative;background:var(--white);border:1px solid var(--line);border-top:5px solid var(--teal);border-radius:var(--r);padding:26px 24px 24px}
@@ -138,15 +142,6 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 .qform__ok b{font-family:var(--head);font-weight:700;font-size:19px;letter-spacing:-.02em}
 .qform__ok p{color:var(--tx-mut);font-size:15px}
 .qform__ok i{font-style:normal;font-weight:600;color:var(--tx);white-space:nowrap}
-
-.qform--quick{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:14px 18px;align-items:start}
-.qform__head{grid-column:1/-1;display:flex;align-items:baseline;gap:24px}
-.qform__head .qform__t{flex:none;margin:0}
-.qform__head .qform__s{margin:0;max-width:38em}
-.qform--quick .fld{margin:0}
-.qform--quick .err{margin:6px 0 0}
-.qform--quick > .btn{margin-top:26px;min-height:50px}
-.qform--quick .qform__note{grid-column:1/-1;margin:0;text-align:right}
 
 /* --- плитки преимуществ --- */
 .tiles{padding:clamp(40px,5vw,68px) 0 0}
@@ -264,10 +259,10 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
 @media (max-width:900px){
   .nav,.hdr .tel,.hdr .btn{display:none}
   .burger{display:block}
+  .hero{min-height:0}
   .hero__in,.how,.two,.cta__in{grid-template-columns:1fr}
-  .qform--quick{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .qform__head{display:block}
-  .qform__head .qform__t{margin-bottom:6px}
+  .hero__in{grid-template-rows:auto}
+  .hero__text,.hero__img,.hero__offer{grid-column:1;grid-row:auto}
   .gal{grid-template-columns:repeat(2,1fr)}
   .gal__i--big{grid-column:span 2;grid-row:auto}
   .gal__i--big img{aspect-ratio:2/1}
@@ -284,9 +279,6 @@ h3{font-size:clamp(17px,1.4vw,20px);font-weight:700;letter-spacing:-.015em}
   .hero__price{grid-template-columns:1fr 1fr}
   .hero__price div{padding-top:14px}
   .hero__price div:nth-child(3){grid-column:1/-1;border-left:0;border-top:1px solid var(--line);margin-top:14px;padding-left:0}
-  .qform--quick{grid-template-columns:1fr}
-  .qform--quick > .btn{margin-top:0}
-  .qform--quick .qform__note{text-align:center}
   .sticky-cta{display:block}
   .ftr{padding-bottom:86px}
   .qform{padding:20px 17px}
