@@ -156,7 +156,7 @@ h3{font-family:var(--serif);font-weight:600;font-size:clamp(19px,1.8vw,23px);lin
 .case__go{margin-top:26px}
 .case__shot{margin:0;min-width:0}
 .case__shot a{display:block;text-decoration:none}
-.case__shot img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:50% 0;border:1px solid var(--rule);filter:saturate(.96);transition:filter .3s,transform .3s}
+.case__shot img{width:100%;height:auto;border:1px solid var(--rule);filter:saturate(.96);transition:filter .3s,transform .3s}
 .case__shot a:hover img{filter:saturate(1.06);transform:translateY(-3px)}
 .case__shot figcaption{margin-top:10px;font:400 11px/1 var(--mono);letter-spacing:.08em;color:var(--tx-mut)}
 
